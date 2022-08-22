@@ -1,6 +1,7 @@
 package com.example.hermes.di
 
 import com.example.hermes.database.AppDatabase
+import com.example.hermes.domain.data.local.operator.dao.OperatorDao
 import com.example.hermes.domain.data.local.shops.dao.ShopsDao
 import com.example.hermes.domain.data.local.user.dao.UserDao
 import com.example.hermes.domain.data.network.authorization.IAuthorizationApi
@@ -23,9 +24,10 @@ class AuthorizationModule {
         authorizationApi: IAuthorizationApi,
         shopsApiManager: ShopsApiManager,
         userDao: UserDao,
-        shopsDao: ShopsDao
+        shopsDao: ShopsDao,
+        operatorDao: OperatorDao
     ): AuthorizationRepository {
-        return AuthorizationRepository(authorizationApi, shopsApiManager, userDao, shopsDao)
+        return AuthorizationRepository(authorizationApi, shopsApiManager, userDao, shopsDao, operatorDao )
     }
 
     @Provides

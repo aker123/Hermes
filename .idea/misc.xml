@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_basket_24.xml" value="0.3445" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_complete_gray.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_delivery_24.xml" value="0.244" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_enter_gray.xml" value="0.244" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_authorization.xml" value="0.2957427536231884" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_registration.xml" value="0.18" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_splash.xml" value="0.2957427536231884" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/authorization_fragment.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_fragment_activity.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_item.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/delivery_fragment_activity.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/entrance_activity.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/entrance_item.xml" value="0.30104166666666665" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/general_activity.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/orders_activity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/person_item.xml" value="0.28940217391304346" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_fragment.xml" value="0.21197916666666666" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_fragment_activity.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_item.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/registration_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/registration_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shop_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shops_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shops_item.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/xml/network_security_config.xml" value="0.20520833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
