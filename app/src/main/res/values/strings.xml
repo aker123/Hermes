@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Hermes</string>
+    <string name="descr_None"></string>
+
+    <!--    region RegistrationFragment-->
+    <string name="registration_person_name_title">Имя</string>
+    <string name="registration_person_surname_title">Фамилия</string>
+    <string name="registration_login_title">Логин</string>
+    <string name="registration_password_title">Пароль</string>
+    <string name="registration_password_confirmation_title">Подтверждение пароля</string>
+    <string name="registration_phone_title">Телефон</string>
+    <string name="registration_mail_title">Адрес электронной почты</string>
+    <string name="registration_click_to_input">Нажмите для ввода</string>
+    <string name="registration_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="registration_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="registration_error">Ошибка</string>
+    <string name="registration_mes_not_filled">Заполнены не все обязательные реквизиты</string>
+    <string name="registration_mes_success">Вы успешно зарегистрировались</string>
+    <!--endregion    -->
+
+    <!--    region AuthorizationFragment-->
+    <string name="authorization_mes_not_filled_login">Заполните логин</string>
+    <string name="authorization_mes_not_filled_password">Заполните пароль</string>
+    <string name="authorization_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="authorization_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="authorization_error_not_user">Вас нет в системе. Возможно ошибка в пароле или логине</string>
+    <string name="authorization_error">Ошибка</string>
+    <!--endregion    -->
+
+    <!--    region EntranceActivity-->
+    <string name="entrance_tab_authorization">Вход</string>
+    <string name="entrance_tab_registration">Регистация</string>
+    <!--endregion    -->
+
+    <!--    region GeneralActivity-->
+    <string name="general_text_shops">Магазины</string>
+    <string name="general_text_basket">Корзина</string>
+    <!--endregion    -->
+
+    <!--    region ProductsFragmentActivity-->
+    <string name="products_text_on_basket">В корзину</string>
+    <!--endregion    -->
+
+    <!--    region DeliveryFragmentActivity-->
+    <string name="delivery_mes_send_success">Заказ успешно отправлен</string>
+    <string name="delivery_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="delivery_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="delivery_error">Ошибка</string>
+    <string name="delivery_street_name_title">Улица</string>
+    <string name="delivery_entrance_name_title">Подъезд</string>
+    <string name="delivery_number_apartment_name_title">Квартира</string>
+    <string name="delivery_intercom_apartment_name_title">Домофон</string>
+    <string name="delivery_floor_apartment_name_title">Этаж</string>
+    <string name="delivery_comment_apartment_name_title">Комментарий</string>
+    <!--endregion    -->
+
+</resources>

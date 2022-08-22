@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/street"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/entrance"/>
+
+    <include
+        android:id="@+id/entrance"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/numberApartment"
+        app:layout_constraintEnd_toStartOf="@id/intercom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/street"/>
+
+    <include
+        android:id="@+id/numberApartment"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/comment"
+        app:layout_constraintEnd_toStartOf="@id/floor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entrance"/>
+
+    <include
+        android:id="@+id/intercom"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/floor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/entrance"
+        app:layout_constraintTop_toBottomOf="@id/street"/>
+
+    <include
+        android:id="@+id/floor"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberApartment"
+        app:layout_constraintTop_toBottomOf="@id/intercom"/>
+
+    <include
+        android:id="@+id/comment"
+        layout="@layout/entrance_item"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/on_send_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberApartment"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/on_send_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:tint="@color/grey"
+        app:rippleColor="@android:color/white"
+        app:backgroundTint="@color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/descr_None"
+        app:srcCompat="@drawable/ic_complete_gray"/>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/load"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
