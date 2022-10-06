@@ -1,17 +1,23 @@
 package com.example.hermes.ui.delivery
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.hermes.R
 import com.example.hermes.databinding.DeliveryFragmentActivityBinding
-import com.example.hermes.domain.models.*
+import com.example.hermes.domain.Map
+import com.example.hermes.domain.models.Address
+import com.example.hermes.domain.models.Client
+import com.example.hermes.domain.models.Order
+import com.example.hermes.domain.models.OrderProducts
+import com.example.hermes.ui.general.GeneralActivity
+import com.example.hermes.ui.map.MapDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
 import java.util.*
+
 
 class DeliveryFragmentActivity : FragmentActivity() {
     companion object {
@@ -20,12 +26,13 @@ class DeliveryFragmentActivity : FragmentActivity() {
         val arguments: MutableMap<String, Any> = mutableMapOf()
     }
 
-
     private var _binding: DeliveryFragmentActivityBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: DeliveryViewModel by viewModels()
+    lateinit var map: Map
 
+    private var address: Address? = null
     private var orderProducts: OrderProducts? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,38 +40,77 @@ class DeliveryFragmentActivity : FragmentActivity() {
         _binding = DeliveryFragmentActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         initObservers()
-        initProperty()
         orderProducts = arguments[ARGUMENT_ORDER_PRODUCTS] as OrderProducts
+
+        viewModel.getAddressActive()?.let {
+            address = it
+            setProperty(it)
+        }
+
+        binding.onMap.setOnClickListener {
+            val dialog = MapDialogFragment()
+            dialog.onBackListener = MapDialogFragment.OnBackListener { address ->
+                setProperty(address)
+            }
+            dialog.show(supportFragmentManager, "MapFragmentActivity")
+        }
+
 
         binding.onSendOrder.setOnClickListener {
             if (orderProducts == null) return@setOnClickListener
             if (orderProducts!!.products == null) return@setOnClickListener
-            val delivery = Delivery(
+            val address = Address(
                 UUID.randomUUID().toString(),
-                binding.street.name.text.toString(),
-                binding.entrance.name.text.toString(),
-                binding.floor.name.text.toString().toLong(),
-                binding.numberApartment.name.text.toString(),
-                binding.intercom.name.text.toString(),
+                binding.street.editText?.text.toString(),
+                binding.entrance.editText?.text.toString(),
+                binding.floor.editText?.text.toString().toLong(),
+                binding.numberApartment.editText?.text.toString(),
+                binding.intercom.editText?.text.toString(),
+                false
             )
 
             val amount = orderProducts?.products?.sumOf { it.amount } ?: return@setOnClickListener
             val quantity =
                 orderProducts?.products?.sumOf { it.quantity } ?: return@setOnClickListener
 
+            val client = Client(
+                orderProducts!!.user.uid,
+                orderProducts!!.user.surname,
+                orderProducts!!.user.name,
+                orderProducts!!.user.phoneNumber,
+                orderProducts!!.user.mail
+            )
+
+            val number = Random().nextInt(1000000 - 99999) + 99999
+
             val order = Order(
                 UUID.randomUUID().toString(),
+                number.toString(),
                 amount,
                 quantity,
                 orderProducts!!.shop,
-                orderProducts!!.user,
-                delivery,
+                client,
+                address,
                 orderProducts!!.products!!,
-                binding.comment.name.text.toString()
+                binding.comment.editText?.text.toString(),
+                Order.Status.NEW,
+                Order.Method.DELIVERY
             )
 
             viewModel.setEvent(DeliveryContract.Event.OnClickSendOrder(order))
         }
+
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun setProperty(address: Address) {
+        binding.street.editText?.setText(address.street)
+        binding.entrance.editText?.setText(address.entrance)
+        binding.numberApartment.editText?.setText(address.numberApartment)
+        binding.intercom.editText?.setText(address.intercom)
+        binding.floor.editText?.setText(if (address.floor != 0L) address.floor.toString() else "")
     }
 
     private fun initObservers() {
@@ -81,58 +127,39 @@ class DeliveryFragmentActivity : FragmentActivity() {
         lifecycleScope.launchWhenCreated {
             viewModel.uiEffect.collect { effect ->
                 when (effect) {
-                    is DeliveryContract.Effect.ShowMessage -> {
-                        showMessage(effect.messageId)
+                    is DeliveryContract.Effect.ShowMessage<*> -> {
+                        when (effect.message) {
+                            is Int -> showMessage(effect.message)
+                            is String -> showMessage(effect.message)
+                        }
+                    }
+                    is DeliveryContract.Effect.OnGeneralActivity -> {
+                        val i = Intent()
+                        i.setClass(this@DeliveryFragmentActivity, GeneralActivity::class.java)
+                        startActivity(i)
                     }
                 }
             }
         }
     }
 
-    private fun initProperty() {
-        binding.street.title.text = getString(R.string.delivery_street_name_title)
-        binding.street.light.isVisible = false
-
-        binding.entrance.title.text = getString(R.string.delivery_entrance_name_title)
-        binding.entrance.light.isVisible = false
-
-        binding.numberApartment.title.text =
-            getString(R.string.delivery_number_apartment_name_title)
-        binding.numberApartment.light.isVisible = false
-
-        binding.intercom.title.text = getString(R.string.delivery_intercom_apartment_name_title)
-        binding.intercom.light.isVisible = false
-
-        binding.floor.title.text = getString(R.string.delivery_floor_apartment_name_title)
-        binding.floor.light.isVisible = false
-
-        binding.comment.title.text = getString(R.string.delivery_comment_apartment_name_title)
-        binding.comment.light.isVisible = false
-    }
-
     private fun toStateSetting() {
-        binding.street.root.isVisible = true
-        binding.entrance.root.isVisible = true
-        binding.intercom.root.isVisible = true
-        binding.numberApartment.root.isVisible = true
-        binding.floor.root.isVisible = true
-        binding.comment.root.isVisible = true
-        binding.load.isVisible = true
+        binding.load.isVisible = false
     }
 
     private fun toStateLoading() {
-        binding.street.root.isVisible = false
-        binding.entrance.root.isVisible = false
-        binding.intercom.root.isVisible = false
-        binding.numberApartment.root.isVisible = false
-        binding.floor.root.isVisible = false
-        binding.comment.root.isVisible = false
         binding.load.isVisible = true
     }
 
-    private fun showMessage(messageId: Int) {
+    private fun showMessage(message: String) {
         Snackbar
-            .make(binding.root, messageId, Snackbar.LENGTH_SHORT)
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun showMessage(message: Int) {
+        Snackbar
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
             .show()
     }
 

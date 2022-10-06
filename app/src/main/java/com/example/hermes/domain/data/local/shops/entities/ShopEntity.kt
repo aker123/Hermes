@@ -13,5 +13,6 @@ class ShopEntity(
     val name: String,
     val physicalAddress: String,
     val legalAddress: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val imagePath : String
 )

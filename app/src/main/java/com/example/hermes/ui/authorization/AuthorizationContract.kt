@@ -1,5 +1,6 @@
 package com.example.hermes.ui.authorization
 
+import com.example.hermes.domain.models.Operator
 import com.example.hermes.domain.models.User
 import com.example.hermes.ui.base.UiEffect
 import com.example.hermes.ui.base.UiEvent
@@ -23,8 +24,8 @@ class AuthorizationContract {
 
 
     sealed class Effect: UiEffect {
-        class ShowMessage(
-            val messageId: Int
+        class ShowMessage<T>(
+            val message: T
         ) : Effect()
         object OnGeneralActivity : Effect()
         object OnOrdersActivity : Effect()

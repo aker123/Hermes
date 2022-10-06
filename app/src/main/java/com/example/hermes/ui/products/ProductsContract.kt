@@ -26,6 +26,14 @@ class ProductsContract {
             val shop: Shop?,
             val products: List<Product>?
         ): Event()
+        class OnSearch(
+            val products: List<Product>,
+            val query: String
+        ): Event()
+        class OnCheckedChange(
+            val product: Product,
+            val size: String
+        ): Event()
     }
 
     sealed class State: UiState {
@@ -34,12 +42,13 @@ class ProductsContract {
         object Loading : State()
     }
 
-
     sealed class Effect: UiEffect {
-        class ShowMessage(
-            val messageId: Int
+        class ShowMessage<T>(
+            val message: T
         ) : Effect()
-        object Update : Effect()
+        class Update(
+            val products: List<Product>? = null
+        ): Effect()
         object OnBasketFragmentActivity : Effect()
     }
 }

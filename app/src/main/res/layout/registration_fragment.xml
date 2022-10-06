@@ -4,112 +4,171 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/person_name"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/person_surname"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0.05"
+        android:hint="@string/registration_person_name_title"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/person_surname"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/registration_person_surname_title"
         app:layout_constraintBottom_toTopOf="@id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/person_name"/>
+        app:layout_constraintTop_toBottomOf="@id/person_name">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/registration_login_title"
         app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/person_surname"/>
+        app:layout_constraintTop_toBottomOf="@id/person_surname">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        app:endIconMode="password_toggle"
+        android:hint="@string/registration_password_title"
         app:layout_constraintBottom_toTopOf="@id/password_confirmation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login"/>
+        app:layout_constraintTop_toBottomOf="@id/login">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_confirmation"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        app:endIconMode="password_toggle"
+        android:hint="@string/registration_password_confirmation_title"
         app:layout_constraintBottom_toTopOf="@id/phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password"/>
+        app:layout_constraintTop_toBottomOf="@id/password">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phone"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/registration_phone_title"
         app:layout_constraintBottom_toTopOf="@id/mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_confirmation"/>
+        app:layout_constraintTop_toBottomOf="@id/password_confirmation">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="phone"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mail"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/register"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/registration_mail_title"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone"/>
+        app:layout_constraintTop_toBottomOf="@id/phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:tint="@color/grey"
-        app:rippleColor="@android:color/white"
+        android:contentDescription="@string/descr_None"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/descr_None"
-        app:srcCompat="@drawable/ic_complete_gray"/>
+        app:layout_constraintVertical_bias="1"
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_complete_gray"
+        app:tint="@color/grey" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/load"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

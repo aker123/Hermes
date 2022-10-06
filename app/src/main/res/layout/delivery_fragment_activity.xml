@@ -4,83 +4,164 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/street"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/parent_topAppBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/entrance"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
 
-    <include
-        android:id="@+id/entrance"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back_24" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/mapView"
         android:layout_width="0dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/world"
+        android:layout_height="200dp"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/parent_topAppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/descr_None" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/on_map"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:tint="@color/grey"
+        app:rippleColor="@android:color/white"
+        app:backgroundTint="@color/white"
+        android:visibility="visible"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@id/mapView"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/descr_None"
+        app:srcCompat="@drawable/ic_arrow_forward_24"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/street"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_street_name_title"
+        app:layout_constraintTop_toBottomOf="@id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/entrance"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_entrance_name_title"
         app:layout_constraintBottom_toTopOf="@id/numberApartment"
         app:layout_constraintEnd_toStartOf="@id/intercom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/street"/>
+        app:layout_constraintTop_toBottomOf="@id/street">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/numberApartment"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_number_apartment_name_title"
         app:layout_constraintBottom_toTopOf="@id/comment"
         app:layout_constraintEnd_toStartOf="@id/floor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/entrance"/>
+        app:layout_constraintTop_toBottomOf="@id/entrance">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/intercom"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_intercom_apartment_name_title"
         app:layout_constraintBottom_toTopOf="@id/floor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/entrance"
-        app:layout_constraintTop_toBottomOf="@id/street"/>
+        app:layout_constraintTop_toBottomOf="@id/street">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/floor"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_floor_apartment_name_title"
         app:layout_constraintBottom_toTopOf="@id/comment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/numberApartment"
-        app:layout_constraintTop_toBottomOf="@id/intercom"/>
+        app:layout_constraintTop_toBottomOf="@id/intercom">
 
-    <include
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/comment"
-        layout="@layout/entrance_item"
-        android:layout_margin="5dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="0"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/on_send_order"
+        android:layout_margin="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:hint="@string/delivery_comment_apartment_name_title"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberApartment"/>
+        app:layout_constraintTop_toBottomOf="@id/numberApartment">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/on_send_order"

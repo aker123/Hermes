@@ -1,15 +1,14 @@
 package com.example.hermes.di
 
 import com.example.hermes.database.AppDatabase
-import com.example.hermes.domain.data.local.products.ProductsDao
+import com.example.hermes.domain.Mapper
 import com.example.hermes.domain.data.local.shops.dao.ShopsDao
 import com.example.hermes.domain.data.network.shops.IShopsApi
 import com.example.hermes.domain.data.network.shops.ShopsApiManager
 import com.example.hermes.domain.repository.ShopsRepository
-import com.example.hermes.domain.usecase.GetProductsUseCase
-import com.example.hermes.domain.usecase.GetShopDBUseCase
-import com.example.hermes.domain.usecase.GetShopsUseCase
-import com.example.hermes.domain.usecase.SaveShopsDBUseCase
+import com.example.hermes.domain.usecase.get.GetShopDBUseCase
+import com.example.hermes.domain.usecase.get.GetShopsUseCase
+import com.example.hermes.domain.usecase.save.SaveShopsDBUseCase
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -23,9 +22,10 @@ class ShopsModule {
     @Singleton
     fun provideShopsRepository(
         shopsApiManager: ShopsApiManager,
-        shopsDao: ShopsDao
+        shopsDao: ShopsDao,
+        mapper: Mapper
     ): ShopsRepository {
-        return ShopsRepository(shopsApiManager,shopsDao)
+        return ShopsRepository(shopsApiManager,shopsDao,mapper)
     }
 
     @Provides
@@ -53,6 +53,8 @@ class ShopsModule {
     ): ShopsApiManager {
         return ShopsApiManager(iShopsApi)
     }
+
+
 
     @Provides
     fun provideGetShopsUseCase(

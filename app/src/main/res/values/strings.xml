@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Hermes</string>
     <string name="descr_None"></string>
+    <string name="search">Поиск</string>
+    <string name="back">Назад</string>
+    <string name="filter">Филтер</string>
+    <string name="price">%1$s ₽</string>
+    <string name="number">№ %1$s</string>
+    <string name="bt_On_All">Включить все</string>
+    <string name="bt_Off_All">Выключить все</string>
+    <string name="mes_no_filters">Фильтры отсутствуют</string>
+    <string name="cap_filters">Фильтры</string>
+    <string name="quantity">%1$s  x</string>
 
     <!--    region RegistrationFragment-->
     <string name="registration_person_name_title">Имя</string>
@@ -14,16 +24,19 @@
     <string name="registration_error_not_connection">Не удалось подключиться к серверу</string>
     <string name="registration_mes_server_error">Возникла ошибка на сервере</string>
     <string name="registration_error">Ошибка</string>
-    <string name="registration_mes_not_filled">Заполнены не все обязательные реквизиты</string>
+    <string name="registration_error_password">Пароли не совпадают</string>
+    <string name="registration_mes_not_filled">Ошибка заполнения реквизитов</string>
     <string name="registration_mes_success">Вы успешно зарегистрировались</string>
     <!--endregion    -->
 
     <!--    region AuthorizationFragment-->
+    <string name="authorization_login_title">Логин</string>
+    <string name="authorization_password_title">Пароль</string>
     <string name="authorization_mes_not_filled_login">Заполните логин</string>
     <string name="authorization_mes_not_filled_password">Заполните пароль</string>
     <string name="authorization_error_not_connection">Не удалось подключиться к серверу</string>
     <string name="authorization_mes_server_error">Возникла ошибка на сервере</string>
-    <string name="authorization_error_not_user">Вас нет в системе. Возможно ошибка в пароле или логине</string>
+    <string name="authorization_error_not_user">Вас нет в системе. Возможно ошибка в пароле или в логине</string>
     <string name="authorization_error">Ошибка</string>
     <!--endregion    -->
 
@@ -32,13 +45,41 @@
     <string name="entrance_tab_registration">Регистация</string>
     <!--endregion    -->
 
+    <!--    region BasketFragment-->
+    <string name="basket_not_products">Корзина пуста</string>
+    <string name="basket_clear_basket_question">Очистить корзину?</string>
+    <string name="basket_clear">Очистить</string>
+    <string name="basket_to_leave">Оставить</string>
+    <string name="basket_delete_product">Вы уверены, что хотите удалить товар?</string>
+    <string name="basket_yes">Да</string>
+    <string name="basket_cancel">Отмена</string>
+    <string name="basket_not_correct_size">Необходимо проставить на все выбранные позиции - размер</string>
+    <string name="basket_need_change_method">Необходимо выбрать способ получения</string>
+    <string name="basket_clear_basket">Очистить корзину</string>
+    <string name="basket_delivery">Доставка</string>
+    <string name="basket_pickup">Самовывоз</string>
+    <string name="basket_mes_send_success">Заказ успешно отправлен</string>
+    <string name="basket_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="basket_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="basket_error">Ошибка</string>
+    <!--endregion    -->
+
     <!--    region GeneralActivity-->
     <string name="general_text_shops">Магазины</string>
     <string name="general_text_basket">Корзина</string>
+    <string name="general_text_orders">Заказы</string>
+    <string name="general_text_profile">Профиль</string>
     <!--endregion    -->
 
     <!--    region ProductsFragmentActivity-->
+    <string name="products_title">Товары</string>
     <string name="products_text_on_basket">В корзину</string>
+    <string name="products_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="products_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="products_error">Ошибка</string>
+    <string name="products_not_products">Товары отсутствуют</string>
+    <string name="products_not_found_products">Ничего не найдено</string>
+    <string name="products_not_correct_size">Необходимо проставить на все выбранные позиции - размер</string>
     <!--endregion    -->
 
     <!--    region DeliveryFragmentActivity-->
@@ -54,4 +95,126 @@
     <string name="delivery_comment_apartment_name_title">Комментарий</string>
     <!--endregion    -->
 
+    <!--    region OrderHistoryFragment-->
+    <string name="order_history_not_orders">Нет заказов</string>
+
+
+    <!--endregion    -->
+
+    <!--    region OrderManagerActivityFragment-->
+    <string name="order_manager_mes_send_success">Заказ успешно изменен</string>
+    <string name="order_manager_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="order_manager_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="order_manager_error">Ошибка</string>
+
+    <string name="order_manager_delivery_text">Адрес доставки</string>
+    <string name="order_manager_address_shop">Адрес магазина</string>
+    <string name="order_manager_street_text">Улица</string>
+    <string name="order_manager_entrance_text">Подъезд</string>
+    <string name="order_manager_intercom_text">Домофон</string>
+    <string name="order_manager_number_apartment_text">Квартира</string>
+    <string name="order_manager_floor_text">Этаж</string>
+    <string name="order_manager_client_text">Заказчик</string>
+    <string name="order_manager_client_phone_text">Тел.</string>
+    <string name="order_manager_client_mail_text">Почта</string>
+    <string name="order_manager_status">Статус</string>
+    <string name="order_manager_not_products">Товары отсутствуют</string>
+    <!--endregion    -->
+
+    <!--    region WelcomeActivity-->
+    <string name="welcome_rationale_message">Для использования приложения необходимо предоставить доступ к местоположению</string>
+    <!--endregion    -->
+
+    <!--    region PaymentFragmentActivity-->
+    <string name="lbl_amount">Amount:</string>
+    <string name="lbl_ccy">Currency:</string>
+    <string name="lbl_email">Email:</string>
+    <string name="lbl_description">Description:</string>
+    <string name="btn_pay_google">GooglePay</string>
+    <string name="btn_pay_card">Pay by Card</string>
+    <string name="e_invalid_amount">Invalid amount</string>
+    <string name="e_invalid_email">Invalid email</string>
+    <string name="e_invalid_description">Enter description</string>
+    <string name="e_google_pay_unsupported">GooglePay is not supported</string>
+    <string name="e_google_pay_canceled">GooglePay has been canceled</string>
+    <!--endregion    -->
+
+    <!--    region ProfileFragment-->
+    <string name="profile_history_orders">Моя история заказов</string>
+    <string name="profile_date">Мои данные</string>
+    <string name="profile_address">Мои адреса</string>
+    <string name="profile_exit">Выход</string>
+    <!--endregion    -->
+
+    <!--    region ShopsFragment-->
+    <string name="shops_not_shops">Магазины отсутствуют</string>
+    <string name="shops_not_found_shops">Ничего не найдено</string>
+    <string name="shops_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="shops_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="shops_error">Ошибка</string>
+    <!--endregion    -->
+
+    <!--    region PickupFragmentActivity-->
+    <string name="pickup_address_shop">Адрес магазина</string>
+    <string name="pickup_comment">Комментарий</string>
+    <string name="pickup_send_order">Отправить заказ</string>
+    <!--endregion    -->
+
+    <!--    region Map-->
+    <string name="map_unknown_error_message">Неизвестая ошибка</string>
+    <string name="map_remote_error_message">Ошибка сервера</string>
+    <string name="map_network_error_message">Ошибка сети</string>
+    <!--endregion    -->
+
+    <!--    region MapDialogFragment-->
+    <string name="map_error">Ошибка</string>
+    <!--endregion    -->
+
+    <!--    region AddressFragmentActivity-->
+    <string name="address_not_addresses">Адреса отсутствуют</string>
+    <string name="address_error">Ошибка</string>
+    <string name="address_delete">Удалить адрес?</string>
+    <string name="address_yes">Да</string>
+    <string name="address_no">Нет</string>
+    <string name="address_set_active">Выбрать адрес по умолчанию?</string>
+    <string name="address_new_address">Новый адрес</string>
+    <!--endregion    -->
+
+    <!--    region AddressManagerFragmentActivity-->
+    <string name="address_manager_error">Ошибка</string>
+    <string name="address_manager_delete">Удалить адрес?</string>
+    <string name="address_manager_yes">Да</string>
+    <string name="address_manager_no">Нет</string>
+    <!--endregion    -->
+
+    <!--    region ProfileManagerFragmentActivity-->
+    <string name="profile_manager_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="profile_manager_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="profile_manager_error">Ошибка</string>
+    <string name="profile_manager_person_name_title">Имя</string>
+    <string name="profile_manager_person_surname_title">Фамилия</string>
+    <string name="profile_manager_password_title">Пароль</string>
+    <string name="profile_manager_phone_title">Телефон</string>
+    <string name="profile_manager_mail_title">Адрес электронной почты</string>
+    <string name="profile_manager_mes_not_filled">Ошибка заполнения реквизитов</string>
+    <!--endregion    -->
+
+    <!--    region ProfileManagerFragmentActivity-->
+    <string name="orders_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="orders_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="orders_error">Ошибка</string>
+    <string name="orders_not_orders">Заказы отсутствуют</string>
+    <string name="orders_not_found_orders">Ничего не найдено</string>
+    <!--endregion    -->
+
+    <!--    region Order-->
+    <string name="order_new">Новый</string>
+    <string name="order_processed">Обработан</string>
+    <string name="order_assembled">Собран</string>
+    <string name="order_sent">Отправлен</string>
+    <string name="order_completed">Выполнен</string>
+    <string name="order_cancelled">Отменен</string>
+    <string name="order_refund">Возврат</string>
+
+    <!--endregion    -->
 </resources>

@@ -4,19 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
 import com.example.hermes.R
 import com.example.hermes.application.Hermes
 import com.example.hermes.databinding.EntranceActivityBinding
-import com.example.hermes.domain.models.User
-import com.example.hermes.domain.usecase.GetOperatorDBUseCase
-import com.example.hermes.domain.usecase.GetUserDBUseCase
-import com.example.hermes.domain.usecase.SaveUserUseCase
-import com.example.hermes.ui.authorization.AuthorizationFragment
+import com.example.hermes.domain.models.Operator
+import com.example.hermes.domain.usecase.get.GetOperatorDBUseCase
+import com.example.hermes.domain.usecase.get.GetUserDBUseCase
 import com.example.hermes.ui.general.GeneralActivity
 import com.example.hermes.ui.orders.OrdersActivity
-import com.example.hermes.ui.registration.RegistrationFragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 

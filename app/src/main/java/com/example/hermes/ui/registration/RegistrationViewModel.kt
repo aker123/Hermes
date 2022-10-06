@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.example.hermes.application.Hermes
 import com.example.hermes.R
+import com.example.hermes.domain.data.network.utils.ApiErrorException
 import com.example.hermes.ui.base.BaseViewModel
 import com.example.hermes.domain.models.User
-import com.example.hermes.domain.usecase.SaveUserUseCase
+import com.example.hermes.domain.usecase.save.SaveUserUseCase
+import com.yandex.runtime.network.BadRequestError
+import com.yandex.runtime.network.internal.BadRequestErrorBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,12 +47,15 @@ class RegistrationViewModel(
 
             try {
                 withContext(Dispatchers.IO) { saveUserUseCase.execute(user) }
-                setEffect { RegistrationContract.Effect.ShowMessage(R.string.registration_mes_success) }
                 setEffect { RegistrationContract.Effect.OnGeneralActivity }
             } catch (e: IOException) {
                 setEffect { RegistrationContract.Effect.ShowMessage(R.string.registration_error_not_connection) }
             } catch (e: HttpException) {
                 setEffect { RegistrationContract.Effect.ShowMessage(R.string.registration_mes_server_error) }
+            } catch (e: ApiErrorException) {
+                e.message?.let {
+                    setEffect { RegistrationContract.Effect.ShowMessage(it) }
+                }
             } catch (e: Exception) {
                 setEffect { RegistrationContract.Effect.ShowMessage(R.string.registration_error) }
             }

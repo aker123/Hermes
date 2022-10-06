@@ -2,13 +2,21 @@ package com.example.hermes.ui.shops
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hermes.R
 import com.example.hermes.databinding.ShopsItemBinding
 import com.example.hermes.domain.models.Shop
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import ru.aptrade.fobos30.UI.FobosInterfaceLibrary.Adapters.util.DefaultDiffCallback
+import java.lang.Exception
 
-class ShopAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+
+class ShopAdapter(
+    val picasso: Picasso
+): RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     var onItemClickListener: OnItemClickListener? = null
 
@@ -51,9 +59,19 @@ class ShopAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
             }
         }
 
+
+
         fun bind(shop: Shop) {
+            picasso.load(shop.imagePath).placeholder(R.drawable.hermes).into(binding.image, object : Callback{
+                override fun onSuccess() {
+                    binding.image.scaleType = ImageView.ScaleType.CENTER_CROP
+                }
+
+                override fun onError(e: Exception?) {
+                }
+
+            })
             binding.name.text = shop.name
-            binding.physicalAddress.text = shop.physicalAddress
         }
     }
 

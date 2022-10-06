@@ -7,9 +7,12 @@ import com.example.hermes.R
 import com.example.hermes.application.Hermes
 import com.example.hermes.domain.models.Product
 import com.example.hermes.domain.models.Shop
-import com.example.hermes.domain.usecase.GetProductsUseCase
-import com.example.hermes.domain.usecase.SaveProductsUseCase
+import com.example.hermes.domain.usecase.get.GetPicassoUseCase
+import com.example.hermes.domain.usecase.get.GetProductsUseCase
+import com.example.hermes.domain.usecase.save.SaveProductsUseCase
 import com.example.hermes.ui.base.BaseViewModel
+import com.example.hermes.ui.shops.ShopsContract
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -28,8 +31,25 @@ class ProductsViewModel(
     @Inject
     lateinit var saveProductsUseCase: SaveProductsUseCase
 
+    @Inject
+    lateinit var getPicassoUseCase: GetPicassoUseCase
+
     init {
         (application as Hermes).appComponent?.inject(this)
+    }
+
+    fun getPicasso(): Picasso {
+        return getPicassoUseCase.execute()
+    }
+
+    private fun search(products: List<Product>, query: String) {
+        viewModelScope.launch {
+            val productsResult = products.filter {
+                it.name.lowercase().contains(query.lowercase())
+                        || it.price.toString().lowercase().contains(query.lowercase())
+            }
+            setEffect { ProductsContract.Effect.Update(productsResult) }
+        }
     }
 
     fun getProducts(shop: Shop): MutableLiveData<List<Product>?> {
@@ -39,11 +59,11 @@ class ProductsViewModel(
             try {
                 products = getProductsUseCase.execute(shop)
             } catch (e: IOException) {
-                setEffect { ProductsContract.Effect.ShowMessage(R.string.registration_error_not_connection) }
+                setEffect { ProductsContract.Effect.ShowMessage(R.string.products_error_not_connection) }
             } catch (e: HttpException) {
-                setEffect { ProductsContract.Effect.ShowMessage(R.string.registration_mes_server_error) }
+                setEffect { ProductsContract.Effect.ShowMessage(R.string.products_mes_server_error) }
             } catch (e: Exception) {
-                setEffect { ProductsContract.Effect.ShowMessage(R.string.registration_error) }
+                setEffect { ProductsContract.Effect.ShowMessage(R.string.products_error) }
             }
 
             setState { ProductsContract.State.Setting }
@@ -62,24 +82,33 @@ class ProductsViewModel(
                 viewModelScope.launch {
                     event.product.quantity = 1
                     event.product.amount = event.product.price * event.product.quantity
-                    setEffect { ProductsContract.Effect.Update }
+                    setEffect { ProductsContract.Effect.Update() }
                 }
             }
             is ProductsContract.Event.OnClickAdd -> {
                 viewModelScope.launch {
                     event.product.quantity = event.product.quantity + 1
                     event.product.amount = event.product.price * event.product.quantity
-                    setEffect { ProductsContract.Effect.Update }
+                    setEffect { ProductsContract.Effect.Update() }
                 }
             }
             is ProductsContract.Event.OnClickRemove -> {
                 viewModelScope.launch {
                     event.product.quantity = event.product.quantity - 1
                     event.product.amount = event.product.price * event.product.quantity
-                    setEffect { ProductsContract.Effect.Update }
+                    setEffect { ProductsContract.Effect.Update() }
+                }
+            }
+            is ProductsContract.Event.OnCheckedChange -> {
+                viewModelScope.launch {
+                    event.product.sizes.forEach {
+                        it.selected = it.value ==  event.size
+                    }
+                    setEffect { ProductsContract.Effect.Update() }
                 }
             }
             is ProductsContract.Event.OnClickOnBasket -> onBasket(event.shop,event.products)
+            is ProductsContract.Event.OnSearch -> search(event.products, event.query)
         }
     }
 

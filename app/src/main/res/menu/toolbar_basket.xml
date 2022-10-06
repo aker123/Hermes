@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/clear_basket"
+        android:icon="@drawable/ic_remove_basket_24"
+        android:title="@string/basket_clear_basket"
+        android:contentDescription="@string/basket_clear_basket"
+        app:showAsAction="ifRoom" />
+
+</menu>

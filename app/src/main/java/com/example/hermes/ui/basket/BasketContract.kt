@@ -1,10 +1,12 @@
 package com.example.hermes.ui.basket
 
+import com.example.hermes.domain.models.Order
 import com.example.hermes.domain.models.OrderProducts
 import com.example.hermes.domain.models.Product
 import com.example.hermes.ui.base.UiEffect
 import com.example.hermes.ui.base.UiEvent
 import com.example.hermes.ui.base.UiState
+import com.example.hermes.ui.delivery.DeliveryContract
 import com.example.hermes.ui.products.ProductsContract
 
 class BasketContract {
@@ -22,6 +24,17 @@ class BasketContract {
         class OnClickDelivery(
             val products: List<Product>?
         ): Event()
+        class OnClickPickup(
+            val products: List<Product>?
+        ): Event()
+        class OnCheckedChange(
+            val product: Product,
+            val size: String
+        ): Event()
+        object OnClearBasket: Event()
+        class OnClickSendOrder(
+            val order: Order
+        ) : Event()
     }
 
     sealed class State: UiState {
@@ -32,12 +45,21 @@ class BasketContract {
 
 
     sealed class Effect: UiEffect {
-        class ShowMessage(
-            val messageId: Int
+        class ShowMessage<T>(
+            val message: T
         ) : Effect()
-        object Update : Effect()
+        class ShowDialogMessage(
+            val product: Product
+        ) : Effect()
+        class Update(
+            val products: List<Product>? = null
+        ): Effect()
         class OnDeliveryFragmentActivity(
             val orderProducts: OrderProducts
         ): Effect()
+        class OnPickupBottomDialog(
+            val orderProducts: OrderProducts
+        ): Effect()
+        object OnGeneralActivity: Effect()
     }
 }

@@ -2,10 +2,13 @@ package com.example.hermes.domain.data.network.order.models
 
 class IOrder(
     val uid: String,
+    val number: String,
     var amount: String,
     var quantity: String,
     val comment: String,
+    val status: String,
+    val method: String,
     val shopUid: String,
-    val userUid: String,
-    val deliveryUid: String,
+    val clientUid: String,
+    val deliveryUid: String
 )

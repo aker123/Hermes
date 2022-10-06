@@ -5,16 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hermes.R
 import com.example.hermes.application.Hermes
-import com.example.hermes.domain.models.Product
 import com.example.hermes.domain.models.Shop
-import com.example.hermes.domain.usecase.GetProductsUseCase
-import com.example.hermes.domain.usecase.GetShopsUseCase
-import com.example.hermes.domain.usecase.SaveShopsDBUseCase
-import com.example.hermes.ui.authorization.AuthorizationContract
+import com.example.hermes.domain.usecase.get.GetPicassoUseCase
+import com.example.hermes.domain.usecase.get.GetShopsUseCase
+import com.example.hermes.domain.usecase.save.SaveShopsDBUseCase
 import com.example.hermes.ui.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -30,22 +27,38 @@ class ShopsViewModel(
     @Inject
     lateinit var saveShopsDBUseCase: SaveShopsDBUseCase
 
+    @Inject
+    lateinit var getPicassoUseCase: GetPicassoUseCase
+
     init {
         (application as Hermes).appComponent?.inject(this)
     }
 
+    fun getPicasso(): Picasso {
+        return getPicassoUseCase.execute()
+    }
+
+    private fun search(shops: List<Shop>, query: String) {
+        viewModelScope.launch {
+            val shopsResult = shops.filter {
+                it.name.lowercase().contains(query.lowercase())
+            }
+            setEffect { ShopsContract.Effect.Update(shopsResult) }
+        }
+    }
+
     fun getShops(): MutableLiveData<List<Shop>?> {
-        var shops: MutableLiveData<List<Shop>?>  = MutableLiveData<List<Shop>?>()
+        var shops: MutableLiveData<List<Shop>?> = MutableLiveData<List<Shop>?>()
         viewModelScope.launch {
             setState { ShopsContract.State.Loading }
             try {
-                 shops = getShopUseCase.execute()
+                shops = getShopUseCase.execute()
             } catch (e: IOException) {
-                setEffect { ShopsContract.Effect.ShowMessage(R.string.registration_error_not_connection) }
+                setEffect { ShopsContract.Effect.ShowMessage(R.string.shops_error_not_connection) }
             } catch (e: HttpException) {
-                setEffect { ShopsContract.Effect.ShowMessage(R.string.registration_mes_server_error) }
+                setEffect { ShopsContract.Effect.ShowMessage(R.string.shops_mes_server_error) }
             } catch (e: Exception) {
-                setEffect { ShopsContract.Effect.ShowMessage(R.string.registration_error) }
+                setEffect { ShopsContract.Effect.ShowMessage(R.string.shops_error) }
             }
 
             setState { ShopsContract.State.Setting }
@@ -59,8 +72,13 @@ class ShopsViewModel(
 
     override fun handleEvent(event: ShopsContract.Event) {
         when (event) {
-            is ShopsContract.Event.OnClickShop -> setEffect { ShopsContract.Effect.OnProductsFragmentActivity(event.shop) }
+            is ShopsContract.Event.OnClickShop -> setEffect {
+                ShopsContract.Effect.OnProductsFragmentActivity(
+                    event.shop
+                )
+            }
             is ShopsContract.Event.SaveShopsDB -> saveShops(event.shops)
+            is ShopsContract.Event.OnSearch -> search(event.shops, event.query)
         }
     }
 

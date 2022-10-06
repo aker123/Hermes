@@ -6,8 +6,8 @@ import com.example.hermes.R
 import com.example.hermes.application.Hermes
 import com.example.hermes.domain.models.Operator
 import com.example.hermes.domain.models.User
-import com.example.hermes.domain.usecase.GetOperatorByLoginAndPasswordUseCase
-import com.example.hermes.domain.usecase.GetUserByLoginAndPasswordUseCase
+import com.example.hermes.domain.usecase.get.GetOperatorByLoginAndPasswordUseCase
+import com.example.hermes.domain.usecase.get.GetUserByLoginAndPasswordUseCase
 import com.example.hermes.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

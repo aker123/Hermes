@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#867c76</color>
-    <color name="red_900">#B71C1C</color>
+    <color name="red_900">#FF0000</color>
+    <color name="my_app_primary_dark">#1B1818</color>
+    <color name="main">#0ABAB5</color>
+    <color name="gray_white">#BDB9B9</color>
 </resources>

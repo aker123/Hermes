@@ -19,12 +19,10 @@ class RegistrationContract {
         object Loading : State()
     }
 
-
     sealed class Effect: UiEffect  {
-        class ShowMessage(
-            val messageId: Int
+        class ShowMessage<T>(
+            val message: T
         ) : Effect()
-
         object OnGeneralActivity : Effect()
     }
 }

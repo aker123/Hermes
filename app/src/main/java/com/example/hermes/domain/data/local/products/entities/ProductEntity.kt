@@ -11,5 +11,7 @@ class ProductEntity(
     val name: String,
     val price: Long,
     var amount: Long,
-    var quantity: Long
+    var quantity: Long,
+    val imagePath: String,
+    val size: String
 )

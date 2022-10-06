@@ -3,6 +3,7 @@ package com.example.hermes.domain.data.network.order
 import com.example.hermes.domain.data.network.order.models.IDelivery
 import com.example.hermes.domain.data.network.order.models.IOrder
 import com.example.hermes.domain.data.network.order.models.IOrderProduct
+import com.example.hermes.domain.data.network.profile.models.IUser
 import com.example.hermes.domain.data.network.shops.models.IShop
 import retrofit2.Callback
 
@@ -14,6 +15,10 @@ class OrderApiManager(
         orderApi.setOrder(i_order)?.execute()
     }
 
+    fun updateOrder(i_order: IOrder){
+        orderApi.updateOrder(i_order)?.execute()
+    }
+
     fun setOrderProducts(i_orderProducts: List<IOrderProduct>){
         orderApi.setOrderProducts(i_orderProducts)?.execute()
     }
@@ -22,18 +27,44 @@ class OrderApiManager(
         orderApi.setDelivery(i_delivery)?.execute()
     }
 
-    fun getOrders(i_shop: IShop, callback: Callback<List<IOrder?>?>){
-        val response = orderApi.getOrders(i_shop.uid)
+    fun getOrders(shopUid: String, callback: Callback<List<IOrder?>?>){
+        val response = orderApi.getOrders(shopUid)
         response?.enqueue(callback)
     }
 
-    fun getOrderProducts(i_order: IOrder, callback: Callback<List<IOrderProduct?>?>){
-        val response = orderApi.getOrderProducts(i_order.uid)
+    fun getOrderHistory(userUid: String, callback: Callback<List<IOrder?>?>){
+        val response = orderApi.getOrderHistory(userUid)
         response?.enqueue(callback)
     }
 
-    fun getDeliveries(i_order: IOrder, callback: Callback<List<IDelivery?>?>){
-        val response = orderApi.getDeliveries(i_order.deliveryUid)
+    fun getActiveOrders(userUid: String, callback: Callback<List<IOrder?>?>){
+        val response = orderApi.getActiveOrders(userUid)
         response?.enqueue(callback)
     }
+
+    fun getOrderProducts(orderUid: String, callback: Callback<List<IOrderProduct?>?>){
+        val response = orderApi.getOrderProducts(orderUid)
+        response?.enqueue(callback)
+    }
+
+    fun getOrderHistoryProducts(orderUid: String): List<IOrderProduct?>? {
+        val response = orderApi.getOrderProducts(orderUid)?.execute()
+        return response?.body()
+    }
+
+    fun getDelivered(deliveryUid: String): IDelivery? {
+        val response = orderApi.getDelivered(deliveryUid)?.execute()
+        return response?.body()
+    }
+
+    fun getUser(userUid: String): IUser? {
+        val response = orderApi.getUser(userUid)?.execute()
+        return response?.body()
+    }
+
+    fun getShop(shopUid: String): IShop? {
+        val response = orderApi.getShop(shopUid)?.execute()
+        return response?.body()
+    }
+
 }

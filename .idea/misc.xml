@@ -4,33 +4,103 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/background_quantity.xml" value="0.3655" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/background_status.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/gradient_background.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/gradient_backgrpund.xml" value="0.3515" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_arrow_back_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_arrow_down_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_arrow_forward_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.3675" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_basket_24.xml" value="0.3445" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_complete_gray.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_data_24.xml" value="0.219" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_delete_24.xml" value="0.3675" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_delivery_24.xml" value="0.244" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_doc_24.xml" value="0.3675" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_enter_gray.xml" value="0.244" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_exit_24.xml" value="0.219" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_hopping_basket_24.xml" value="0.3675" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_location_24.xml" value="0.219" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_location_main_24.xml" value="0.3075" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_lock_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_maps_ugc_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_menu_24.xml" value="0.2495" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_navigation_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_near_me_12.xml" value="0.261" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_near_me_24.xml" value="0.261" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_orders_24.xml" value="0.219" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_pen_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_pen_main_24.xml" value="0.3075" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_remove_basket_24.xml" value="0.261" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_send_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_shopping_bag_24.xml" value="0.3675" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/drawable/ic_shops_24.xml" value="0.219" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout-v23/shops_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_authorization.xml" value="0.2957427536231884" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_registration.xml" value="0.18" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/activity_splash.xml" value="0.2957427536231884" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/address_fragment_activity.xml" value="0.2" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/address_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/address_item_vertical.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/address_manager_fragment_activity.xml" value="0.25" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/authorization_fragment.xml" value="0.33" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_fragment.xml" value="0.33" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_fragment_activity.xml" value="0.365625" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/basket_item.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/chip_choice.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/delivery_fragment_activity.xml" value="0.25" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/entrance_activity.xml" value="0.365625" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/entrance_item.xml" value="0.30104166666666665" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/general_activity.xml" value="0.33" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/orders_activity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/filter_checkbox.xml" value="0.30012825994014536" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/filter_checkbox_toggle.xml" value="0.3009833262077811" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/filter_dialog.xml" value="0.3009833262077811" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/filter_toggle.xml" value="0.3009833262077811" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/general_activity.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/layout_chip_choice.xml" value="0.5" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/list_item.xml" value="0.20008550662676358" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/map_dialog_fragment.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/map_fragment_activity.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/modal_bottom_sheet_content.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_history_fragment.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_history_fragment_activity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_history_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_history_product_item.xml" value="0.22" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_item.xml" value="0.140234375" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_manager_client.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_manager_delivery.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_manager_fragment_activity.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_manager_header.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_product_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_products_fragment_activity.xml" value="0.33697916666666666" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/order_products_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/orders_activity.xml" value="0.2" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/orders_item.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/payment_fragment.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/payment_fragment_activity.xml" value="0.225" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/person_item.xml" value="0.28940217391304346" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/pickup_bottom_dialog.xml" value="0.3009833262077811" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/pickup_fragment_activity.xml" value="0.25" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_fragment.xml" value="0.21197916666666666" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_fragment_activity.xml" value="0.25" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_item.xml" value="0.25" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/registration_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_fragment_activity.xml" value="0.33" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/products_item.xml" value="0.22" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/profile_fragment.xml" value="0.25" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/profile_manager_fragment_activity.xml" value="0.30012825994014536" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/registration_fragment.xml" value="0.21" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/registration_item.xml" value="0.33" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shop_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shops_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shops_fragment.xml" value="0.25" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/layout/shops_item.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/top_app_bar.xml" value="0.365625" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/layout/welcome_activity.xml" value="0.21979166666666666" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/statuses_menu.xml" value="0.20008550662676358" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/toolbar_address.xml" value="0.3009833262077811" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/toolbar_basket.xml" value="0.23541666666666666" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/toolbar_filter_search.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/toolbar_search.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Hermes/app/src/main/res/menu/top_app_bar.xml" value="0.23541666666666666" />
         <entry key="..\:/Projects/Hermes/app/src/main/res/xml/network_security_config.xml" value="0.20520833333333333" />
       </map>
     </option>

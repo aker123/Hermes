@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,86 +43,120 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initObservers()
-        initProperty()
 
         binding.register.setOnClickListener {
             if (!isNeedPropertiesFilled()) {
+                setErrorProperty()
                 showMessage(R.string.registration_mes_not_filled)
                 return@setOnClickListener
             }
 
             val user = User(
                 UUID.randomUUID().toString(),
-                binding.login.name.text.toString(),
-                binding.password.name.text.toString(),
-                binding.personSurname.name.text.toString(),
-                binding.personName.name.text.toString(),
-                binding.phone.name.text.toString(),
-                binding.mail.name.text.toString()
+                binding.login.editText?.text.toString(),
+                binding.password.editText?.text.toString(),
+                binding.personSurname.editText?.text.toString(),
+                binding.personName.editText?.text.toString(),
+                binding.phone.editText?.text.toString(),
+                binding.mail.editText?.text.toString()
             )
 
             viewModel.setEvent(RegistrationContract.Event.OnClickRegister(user))
         }
 
-        binding.personName.name.addTextChangedListener {
-            binding.personName.light.isVisible = binding.personName.name.text.toString() == ""
+        binding.personName.editText?.doOnTextChanged { text, start, before, count ->
+            if (text != null && binding.personName.isErrorEnabled) {
+                binding.personName.isErrorEnabled = false
+                binding.personName.error = null
+            }
         }
-        binding.personSurname.name.addTextChangedListener {
-            binding.personSurname.light.isVisible = binding.personSurname.name.text.toString() == ""
+        binding.personSurname.editText?.doOnTextChanged { text, start, before, count ->
+            if (text != null && binding.personSurname.isErrorEnabled) {
+                binding.personSurname.isErrorEnabled = false
+                binding.personSurname.error = null
+            }
         }
-        binding.login.name.addTextChangedListener {
-            binding.login.light.isVisible = binding.login.name.text.toString() == ""
+        binding.login.editText?.doOnTextChanged { text, start, before, count ->
+            if (text != null && binding.login.isErrorEnabled) {
+                binding.login.isErrorEnabled = false
+                binding.login.error = null
+            }
         }
-        binding.password.name.addTextChangedListener {
-            binding.password.light.isVisible = binding.password.name.text.toString() == ""
+        binding.password.editText?.doOnTextChanged { text, start, before, count ->
+            if (text != null && binding.password.isErrorEnabled) {
+                binding.password.isErrorEnabled = false
+                binding.password.error = null
+            }
         }
-        binding.passwordConfirmation.name.addTextChangedListener {
-            binding.passwordConfirmation.light.isVisible =
-                binding.passwordConfirmation.name.text.toString() == ""
+        binding.passwordConfirmation.editText?.doOnTextChanged { text, start, before, count ->
+            if (text != null && binding.passwordConfirmation.isErrorEnabled) {
+                binding.passwordConfirmation.isErrorEnabled = false
+                binding.passwordConfirmation.error = null
+            }
         }
-        binding.phone.name.addTextChangedListener {
-            binding.phone.light.isVisible = binding.phone.name.text.toString() == ""
-        }
+    }
 
-        binding.mail.name.addTextChangedListener {
-            binding.mail.light.isVisible = binding.mail.name.text.toString() == ""
+    private fun setErrorProperty() {
+        if (binding.personName.editText?.text?.isEmpty() == true) {
+            binding.personName.error = getString(R.string.registration_error)
+            binding.personName.isErrorEnabled = true
+        } else {
+            binding.personName.isErrorEnabled = false
+            binding.personName.error = null
         }
+        if (binding.personSurname.editText?.text?.isEmpty() == true) {
+            binding.personSurname.error = getString(R.string.registration_error)
+            binding.personSurname.isErrorEnabled = true
+        } else {
+            binding.personSurname.isErrorEnabled = false
+            binding.personSurname.error = null
+        }
+        if (binding.login.editText?.text?.isEmpty() == true) {
+            binding.login.error = getString(R.string.registration_error)
+            binding.login.isErrorEnabled = true
+        } else {
+            binding.login.isErrorEnabled = false
+            binding.login.error = null
+        }
+        if (binding.password.editText?.text?.isEmpty() == true) {
+            binding.password.error = getString(R.string.registration_error)
+            binding.password.isErrorEnabled = true
+        } else {
+            binding.password.isErrorEnabled = false
+            binding.password.error = null
+            checkPasswordEquality()
+        }
+        if (binding.passwordConfirmation.editText?.text?.isEmpty() == true) {
+            binding.passwordConfirmation.error = getString(R.string.registration_error)
+            binding.passwordConfirmation.isErrorEnabled = true
+        } else {
+            binding.passwordConfirmation.isErrorEnabled = false
+            binding.passwordConfirmation.error = null
+            checkPasswordEquality()
+        }
+    }
 
+    private fun checkPasswordEquality() {
+        if (binding.password.editText?.text != binding.passwordConfirmation.editText?.text) {
+            binding.password.error = getString(R.string.registration_error_password)
+            binding.password.isErrorEnabled = true
+            binding.passwordConfirmation.error = getString(R.string.registration_error_password)
+            binding.passwordConfirmation.isErrorEnabled = true
+        } else {
+            binding.passwordConfirmation.isErrorEnabled = false
+            binding.passwordConfirmation.error = null
+            binding.password.isErrorEnabled = false
+            binding.password.error = null
+        }
     }
 
     private fun isNeedPropertiesFilled(): Boolean {
-        return !(binding.personName.name.text.toString() == ""
-                || binding.personSurname.name.text.toString() == ""
-                || binding.login.name.text.toString() == ""
-                || binding.password.name.text.toString() == ""
-                || binding.passwordConfirmation.name.text.toString() == "")
-    }
-
-    private fun initProperty() {
-        binding.personName.title.text = getString(R.string.registration_person_name_title)
-        binding.personName.light.isVisible = binding.personName.name.text.toString() == ""
-
-        binding.personSurname.title.text = getString(R.string.registration_person_surname_title)
-        binding.personSurname.light.isVisible = binding.personSurname.name.text.toString() == ""
-
-        binding.login.title.text = getString(R.string.registration_login_title)
-        binding.login.light.isVisible = binding.login.name.text.toString() == ""
-
-        binding.password.title.text = getString(R.string.registration_password_title)
-        binding.password.light.isVisible = binding.password.name.text.toString() == ""
-
-        binding.passwordConfirmation.title.text =
-            getString(R.string.registration_password_confirmation_title)
-        binding.passwordConfirmation.light.isVisible =
-            binding.passwordConfirmation.name.text.toString() == ""
-
-        binding.phone.title.text = getString(R.string.registration_phone_title)
-        binding.phone.light.isVisible = false
-        binding.phone.name.inputType = InputType.TYPE_CLASS_PHONE
-
-        binding.mail.title.text = getString(R.string.registration_mail_title)
-        binding.mail.light.isVisible = false
-        binding.mail.name.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        return !(binding.personName.editText?.text.toString() == ""
+                || binding.personSurname.editText?.text.toString() == ""
+                || binding.login.editText?.text.toString() == ""
+                || binding.password.editText?.text.toString() == ""
+                || binding.passwordConfirmation.editText?.text.toString() == ""
+                || binding.password.editText?.text.toString() != binding.passwordConfirmation.editText?.text.toString())
     }
 
     private fun initObservers() {
@@ -138,8 +173,11 @@ class RegistrationFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.uiEffect.collect { effect ->
                 when (effect) {
-                    is RegistrationContract.Effect.ShowMessage -> {
-                        showMessage(effect.messageId)
+                    is RegistrationContract.Effect.ShowMessage<*> -> {
+                        when (effect.message) {
+                            is Int -> showMessage(effect.message)
+                            is String -> showMessage(effect.message)
+                        }
                     }
                     is RegistrationContract.Effect.OnGeneralActivity -> {
                         onGeneralActivity()
@@ -156,32 +194,38 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun toStateSetting() {
-        binding.personName.root.isVisible = true
-        binding.personSurname.root.isVisible = true
-        binding.login.root.isVisible = true
-        binding.password.root.isVisible = true
-        binding.passwordConfirmation.root.isVisible = true
-        binding.phone.root.isVisible = true
-        binding.mail.root.isVisible = true
+        binding.personName.isVisible = true
+        binding.personSurname.isVisible = true
+        binding.login.isVisible = true
+        binding.password.isVisible = true
+        binding.passwordConfirmation.isVisible = true
+        binding.phone.isVisible = true
+        binding.mail.isVisible = true
         binding.load.isVisible = false
         binding.register.isVisible = true
     }
 
     private fun toStateLoading() {
-        binding.personName.root.isVisible = false
-        binding.personSurname.root.isVisible = false
-        binding.login.root.isVisible = false
-        binding.password.root.isVisible = false
-        binding.passwordConfirmation.root.isVisible = false
-        binding.phone.root.isVisible = false
-        binding.mail.root.isVisible = false
+        binding.personName.isVisible = false
+        binding.personSurname.isVisible = false
+        binding.login.isVisible = false
+        binding.password.isVisible = false
+        binding.passwordConfirmation.isVisible = false
+        binding.phone.isVisible = false
+        binding.mail.isVisible = false
         binding.load.isVisible = true
         binding.register.isVisible = false
     }
 
-    private fun showMessage(messageId: Int) {
+    private fun showMessage(message: String) {
         Snackbar
-            .make(binding.root, messageId, Snackbar.LENGTH_SHORT)
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun showMessage(message: Int) {
+        Snackbar
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
             .show()
     }
 

@@ -4,5 +4,6 @@ class IProduct(
     val uid: String,
     val name: String,
     val price: String,
-    val shopUID: String
+    val shopUID: String,
+    val imagePath: String
 )

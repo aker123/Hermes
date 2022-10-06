@@ -6,5 +6,7 @@ class IOrderProduct(
     val price: String,
     var amount: String,
     var quantity: String,
-    val orderUid: String
+    val orderUid: String,
+    val imagePath: String,
+    val size: String
 )

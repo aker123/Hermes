@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/delete_address"
+        android:icon="@drawable/ic_delete_24"
+        android:title="@string/address_manager_delete"
+        android:contentDescription="@string/address_manager_delete"
+        app:showAsAction="ifRoom" />
+
+</menu>

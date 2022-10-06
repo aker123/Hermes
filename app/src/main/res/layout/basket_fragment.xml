@@ -5,28 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/parent_topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/basket_item"/>
+        app:layout_constraintVertical_bias="0">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/toolbar_basket"
+            app:navigationIcon="@drawable/ic_arrow_back_24" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:visibility="visible"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/method_obtaining"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parent_topAppBar"
+        tools:listitem="@layout/basket_item" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/method_obtaining"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:singleLine="true"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_margin="5dp"
+            app:chipIconEnabled="true"
+            app:chipIcon="@drawable/ic_delivery_24"
+            android:text="@string/basket_delivery"
+            app:ensureMinTouchTargetSize="false"
+            style="@style/ChipStyle"
+            tools:ignore="SmallSp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_pickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_margin="5dp"
+            app:chipIconEnabled="true"
+            app:chipIcon="@drawable/ic_shopping_bag_24"
+            android:text="@string/basket_pickup"
+            app:ensureMinTouchTargetSize="false"
+            style="@style/ChipStyle"
+            tools:ignore="SmallSp" />
+
+</com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/load"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/parent_topAppBar"
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/message"
@@ -47,16 +108,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:tint="@color/grey"
-        app:rippleColor="@android:color/white"
-        app:backgroundTint="@color/white"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/descr_None"
-        app:srcCompat="@drawable/ic_delivery_24"/>
+        android:visibility="gone"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_arrow_forward_24"
+        app:tint="@color/grey" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,28 @@
 package com.example.hermes.ui.products
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hermes.R
+import com.example.hermes.databinding.ChipChoiceBinding
 import com.example.hermes.databinding.ProductsItemBinding
 import com.example.hermes.domain.models.Product
+import com.google.android.material.chip.Chip
+import com.squareup.picasso.Picasso
 import ru.aptrade.fobos30.UI.FobosInterfaceLibrary.Adapters.util.DefaultDiffCallback
 
-class ProductsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductsAdapter(
+    val picasso: Picasso
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
     var onAddClickListener: OnAddClickListener? = null
     var onRemoveClickListener: OnRemoveClickListener? = null
     var onPriceClickListener: OnPriceClickListener? = null
+    var onCheckedStateChangeListener : OnCheckedStateChangeListener ? = null
 
     var items: List<Product> = listOf()
         set(value) {
@@ -80,9 +88,30 @@ class ProductsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 onPriceClickListener?.onPriceClick(_items[pos])
             }
+
+            binding.sizes.setOnCheckedStateChangeListener { group, checkedIds ->
+                val pos = adapterPosition
+                if (pos == RecyclerView.NO_POSITION) {
+                    return@setOnCheckedStateChangeListener
+                }
+                var chip: Chip? =  null
+                  if (checkedIds.isNotEmpty())  chip = group.findViewById(checkedIds[0])
+                onCheckedStateChangeListener?.onCheckedStateChange(_items[pos],chip?.text?.toString() ?: "")
+            }
         }
 
         fun bind(product: Product) {
+            picasso.load(product.imagePath).placeholder(R.drawable.hermes).into(binding.image)
+
+            if (binding.sizes.childCount == 0) {
+                product.sizes.sortedBy { it.value }.forEach { size ->
+                    val chip = ChipChoiceBinding
+                        .inflate(LayoutInflater.from(binding.sizes.context), binding.sizes, false)
+                    chip.root.text = size.value
+                    binding.sizes.addView(chip.root)
+                }
+            }
+
             binding.layoutQuantity.isVisible = product.quantity > 0
             binding.priceBtn.isVisible = product.quantity == 0L
             binding.name.text = product.name
@@ -117,6 +146,10 @@ class ProductsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun interface OnAddClickListener {
         fun onAddClick(product: Product)
+    }
+
+    fun interface OnCheckedStateChangeListener {
+        fun onCheckedStateChange(product: Product, size: String)
     }
 
     fun interface OnRemoveClickListener {

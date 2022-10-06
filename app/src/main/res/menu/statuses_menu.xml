@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/order_new"
+        android:title="@string/order_new" />
+    <item android:id="@+id/order_processed"
+        android:title="@string/order_processed" />
+    <item android:id="@+id/order_assembled"
+        android:title="@string/order_assembled" />
+    <item android:id="@+id/order_sent"
+        android:title="@string/order_sent" />
+    <item android:id="@+id/order_completed"
+        android:title="@string/order_completed" />
+    <item android:id="@+id/order_cancelled"
+        android:title="@string/order_cancelled" />
+    <item android:id="@+id/order_refund"
+        android:title="@string/order_refund" />
+</menu>

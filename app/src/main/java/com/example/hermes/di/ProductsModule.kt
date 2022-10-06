@@ -1,13 +1,15 @@
 package com.example.hermes.di
 
 import com.example.hermes.database.AppDatabase
+import com.example.hermes.domain.Mapper
 import com.example.hermes.domain.data.local.products.ProductsDao
 import com.example.hermes.domain.data.network.products.IProductsApi
 import com.example.hermes.domain.data.network.products.ProductsApiManager
 import com.example.hermes.domain.repository.ProductsRepository
-import com.example.hermes.domain.usecase.GetProductsUseCase
-import com.example.hermes.domain.usecase.GetSelectedProductsUseCase
-import com.example.hermes.domain.usecase.SaveProductsUseCase
+import com.example.hermes.domain.usecase.delete.ClearBasketUseCase
+import com.example.hermes.domain.usecase.get.GetProductsUseCase
+import com.example.hermes.domain.usecase.get.GetSelectedProductsUseCase
+import com.example.hermes.domain.usecase.save.SaveProductsUseCase
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -21,9 +23,10 @@ class ProductsModule {
     @Singleton
     fun provideProductsRepository(
         productsApiManager: ProductsApiManager,
-        productsDao: ProductsDao
+        productsDao: ProductsDao,
+        mapper: Mapper
     ): ProductsRepository {
-        return ProductsRepository(productsApiManager,productsDao)
+        return ProductsRepository(productsApiManager,productsDao,mapper)
     }
 
     @Provides
@@ -74,4 +77,10 @@ class ProductsModule {
         return SaveProductsUseCase(productsRepository)
     }
 
+    @Provides
+    fun provideClearBasketUseCase(
+        productsRepository: ProductsRepository
+    ): ClearBasketUseCase {
+        return ClearBasketUseCase(productsRepository)
+    }
 }

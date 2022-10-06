@@ -2,6 +2,7 @@ package com.example.hermes.di
 
 import android.content.Context
 import com.example.hermes.database.AppDatabase
+import com.example.hermes.domain.Mapper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -25,4 +26,9 @@ class AppModule(
         return AppDatabase.getAppDatabaseInstance(context)
     }
 
+    @Provides
+    @Singleton
+    fun provideMapper(): Mapper {
+        return Mapper()
+    }
 }

@@ -5,18 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hermes.R
 import com.example.hermes.databinding.ShopsFragmentBinding
 import com.example.hermes.domain.models.Shop
-import com.example.hermes.ui.authorization.AuthorizationContract
-import com.example.hermes.ui.general.GeneralActivity
 import com.example.hermes.ui.products.ProductsFragmentActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
 
 
 class ShopsFragment : Fragment() {
@@ -29,6 +28,8 @@ class ShopsFragment : Fragment() {
     private var adapter: ShopAdapter? = null
 
     private var shops: List<Shop>? = null
+    private var shopsSearch: List<Shop>? = null
+    var search: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,21 +49,44 @@ class ShopsFragment : Fragment() {
 
         viewModel.getShops().observe(viewLifecycleOwner) {
             shops = it
-            adapter?.items = shops ?: listOf()
+            shopsSearch = it
+            update()
             if (it != null) viewModel.setEvent(ShopsContract.Event.SaveShopsDB(it))
         }
 
         adapter?.onItemClickListener = ShopAdapter.OnItemClickListener {
             viewModel.setEvent(ShopsContract.Event.OnClickShop(it))
         }
+
+        val searchView = binding.topAppBar.menu.findItem(R.id.search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    shopsSearch?.let {
+                        viewModel.setEvent(ShopsContract.Event.OnSearch(shopsSearch!!, newText))
+                    }
+                }
+                return true
+            }
+        })
+
+        searchView.setOnQueryTextFocusChangeListener { _, focus ->
+            search = focus
+        }
+
     }
 
     private fun init() {
-        adapter = ShopAdapter()
+        adapter = ShopAdapter(viewModel.getPicasso())
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
     }
+
 
     private fun initObservers() {
         lifecycleScope.launchWhenStarted {
@@ -78,8 +102,11 @@ class ShopsFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.uiEffect.collect { effect ->
                 when (effect) {
-                    is ShopsContract.Effect.ShowMessage -> {
-                        showMessage(effect.messageId)
+                    is ShopsContract.Effect.ShowMessage<*> -> {
+                        when (effect.message) {
+                            is Int -> showMessage(effect.message)
+                            is String -> showMessage(effect.message)
+                        }
                     }
                     is ShopsContract.Effect.OnProductsFragmentActivity -> {
                         val i = Intent()
@@ -88,15 +115,30 @@ class ShopsFragment : Fragment() {
                             effect.shop
                         activity?.startActivity(i)
                     }
+                    is ShopsContract.Effect.Update -> {
+                        shops = effect.shops
+                        update()
+                    }
                 }
             }
         }
 
     }
 
+    private fun update() {
+        adapter?.items = shops ?: listOf()
+        if (adapter?.itemCount == 0) {
+            binding.recyclerView.isVisible = false
+            binding.message.visibility = View.VISIBLE
+            if (search) binding.message.text = getString(R.string.shops_not_found_shops)
+            else binding.message.text = getString(R.string.shops_not_shops)
+        } else {
+            binding.recyclerView.isVisible = true
+            binding.message.visibility = View.GONE
+        }
+    }
 
     private fun toStateSetting() {
-        adapter?.items = shops ?: listOf()
         binding.recyclerView.isVisible = true
         binding.load.isVisible = false
     }
@@ -106,12 +148,17 @@ class ShopsFragment : Fragment() {
         binding.load.isVisible = true
     }
 
-    private fun showMessage(messageId: Int) {
+    private fun showMessage(message: String) {
         Snackbar
-            .make(binding.root, messageId, Snackbar.LENGTH_SHORT)
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
             .show()
     }
 
+    private fun showMessage(message: Int) {
+        Snackbar
+            .make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .show()
+    }
 
     override fun onDestroyView() {
         _binding = null

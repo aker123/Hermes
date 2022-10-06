@@ -1,11 +1,7 @@
 package com.example.hermes.domain.data.local.operator.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.hermes.domain.data.local.operator.entities.OperatorEntity
-import com.example.hermes.domain.data.local.user.entities.UserEntity
 
 @Dao
 interface OperatorDao {
@@ -15,4 +11,7 @@ interface OperatorDao {
 
     @Query("SELECT * FROM OperatorEntity limit 1")
     fun getOperator(): OperatorEntity?
+
+    @Delete
+    fun deleteOperator(operatorEntity: OperatorEntity)
 }

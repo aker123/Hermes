@@ -16,6 +16,10 @@ class ShopsContract {
         class SaveShopsDB(
             val shops:List<Shop>
         ): Event()
+        class OnSearch(
+            val shops:List<Shop>,
+            val query: String
+        ): Event()
     }
 
     sealed class State: UiState {
@@ -26,11 +30,14 @@ class ShopsContract {
 
 
     sealed class Effect: UiEffect {
-        class ShowMessage(
-            val messageId: Int
+        class ShowMessage<T>(
+            val message: T
         ) : Effect()
         class OnProductsFragmentActivity(
             val shop: Shop
+        ): Effect()
+        class Update(
+            val shops:List<Shop>,
         ): Effect()
     }
 }

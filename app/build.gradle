@@ -41,7 +41,9 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
 
     implementation 'com.google.android.material:material:1.6.1'
     implementation "com.balysv:material-ripple:1.0.2"
@@ -66,4 +68,14 @@ dependencies {
 
     implementation "androidx.room:room-ktx:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.yandex.android:maps.mobile:4.0.0-full'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
+    implementation 'com.google.android.gms:play-services-wallet:19.1.0'
+    implementation 'com.cloudipsp:android:1.0'
+    implementation 'io.github.ParkSangGwon:tedpermission-coroutine:3.3.0'
 }
