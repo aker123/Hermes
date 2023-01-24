@@ -1,13 +1,14 @@
 package com.example.hermes.di
 
+import com.example.hermes.database.AppDatabase
 import com.example.hermes.domain.Mapper
+import com.example.hermes.domain.data.local.orders.OrdersDao
+import com.example.hermes.domain.data.local.products.ProductsDao
 import com.example.hermes.domain.data.network.order.IOrderApi
 import com.example.hermes.domain.data.network.order.OrderApiManager
 import com.example.hermes.domain.repository.OrderRepository
-import com.example.hermes.domain.usecase.get.GetActiveOrdersUseCase
-import com.example.hermes.domain.usecase.get.GetOrderHistoryUseCase
-import com.example.hermes.domain.usecase.get.GetOrderProductsUseCase
-import com.example.hermes.domain.usecase.get.GetOrdersUseCase
+import com.example.hermes.domain.usecase.get.*
+import com.example.hermes.domain.usecase.save.UpdateOrdersUseCase
 import com.example.hermes.domain.usecase.send.SendOrderStatusUseCase
 import com.example.hermes.domain.usecase.send.SendOrderUseCase
 import dagger.Module
@@ -23,9 +24,10 @@ class OrderModule {
     @Singleton
     fun provideOrderRepository(
         orderApiManager: OrderApiManager,
+        ordersDao: OrdersDao,
         mapper: Mapper
     ): OrderRepository {
-        return OrderRepository(orderApiManager,mapper)
+        return OrderRepository(orderApiManager,ordersDao,mapper)
     }
 
     @Provides
@@ -43,6 +45,15 @@ class OrderModule {
         iOrderApi: IOrderApi
     ): OrderApiManager {
         return OrderApiManager(iOrderApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrdersDao(
+        @Named("provideDbInstance")
+        appDatabase: AppDatabase
+    ): OrdersDao {
+        return appDatabase.getOrdersDao()
     }
 
     @Provides
@@ -85,5 +96,26 @@ class OrderModule {
         orderRepository: OrderRepository
     ): GetActiveOrdersUseCase {
         return GetActiveOrdersUseCase(orderRepository)
+    }
+
+    @Provides
+    fun provideGetOrdersDBUseCase(
+        orderRepository: OrderRepository
+    ): GetOrdersDBUseCase {
+        return GetOrdersDBUseCase(orderRepository)
+    }
+
+    @Provides
+    fun provideUpdateOrdersUseCase(
+        orderRepository: OrderRepository
+    ): UpdateOrdersUseCase {
+        return UpdateOrdersUseCase(orderRepository)
+    }
+
+    @Provides
+    fun provideGetOrdersHeaderUseCase(
+        orderRepository: OrderRepository
+    ): GetOrdersHeaderUseCase {
+        return GetOrdersHeaderUseCase(orderRepository)
     }
 }

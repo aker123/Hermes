@@ -3,7 +3,6 @@ package com.example.hermes.ui.general
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.hermes.ui.authorization.AuthorizationFragment
 import com.example.hermes.ui.basket.BasketFragment
 import com.example.hermes.ui.orderHistory.OrderHistoryFragment
 import com.example.hermes.ui.profile.ProfileFragment

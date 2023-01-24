@@ -2,6 +2,7 @@ package com.example.hermes.domain
 
 import com.example.hermes.domain.data.local.address.entities.AddressEntity
 import com.example.hermes.domain.data.local.operator.entities.OperatorEntity
+import com.example.hermes.domain.data.local.orders.entities.OrderEntity
 import com.example.hermes.domain.data.local.products.entities.ProductEntity
 import com.example.hermes.domain.data.local.products.entities.SizeEntity
 import com.example.hermes.domain.data.local.shops.entities.ShopEntity
@@ -243,8 +244,12 @@ class Mapper {
                 it.price.toLong(),
                 it.amount.toLong(),
                 it.quantity.toLong(),
+                "",
+                "",
+                Product.Category.values().first { value -> value.key == "" },
                 it.imagePath,
-                sizes
+                sizes,
+                ""
             )
             products.add(product)
         }
@@ -261,6 +266,7 @@ class Mapper {
         return Order(
             i_orders.uid,
             i_orders.number,
+            i_orders.date,
             i_orders.amount.toLong(),
             i_orders.quantity.toLong(),
             shop,
@@ -271,6 +277,80 @@ class Mapper {
             Order.Status.values().first { it.key == i_orders.status },
             Order.Method.values().first { it.key == i_orders.method }
         )
+    }
+
+    fun mapNetworkOrdersHeaderToOrdersHeader(
+        i_orders: List<IOrder?>?
+    ): List<Order> {
+        if (i_orders == null) return listOf()
+        val orders: MutableList<Order> = mutableListOf()
+        val shop = Shop("", "", "", "", "", "")
+        val client = Client("", "", "", "", "")
+        val address = Address("", "", "", 0L, "", "", false)
+        i_orders.forEach { _order ->
+            val order = _order?.let {
+                Order(
+                    it.uid,
+                    _order.number,
+                    _order.date,
+                    _order.amount.toLong(),
+                    _order.quantity.toLong(),
+                    shop,
+                    client,
+                    address,
+                    listOf(),
+                    _order.comment,
+                    Order.Status.values().first { it.key == _order.status },
+                    Order.Method.values().first { it.key == _order.method }
+                )
+            }
+            if (order != null) {
+                orders.add(order)
+            }
+        }
+        return orders
+    }
+
+    fun mapOrdersToOrdersDB(
+        order: Order
+    ): OrderEntity {
+        return OrderEntity(
+            order.uid,
+            order.number,
+            order.date,
+            order.amount.toString(),
+            order.quantity.toString(),
+            order.comment,
+            order.status.key,
+            order.method.key
+        )
+    }
+
+    fun mapOrdersDBToOrders(
+        ordersEntity: List<OrderEntity>
+    ): List<Order> {
+        val orders: MutableList<Order> = mutableListOf()
+        val shop = Shop("", "", "", "", "", "")
+        val client = Client("", "", "", "", "")
+        val address = Address("", "", "", 0L, "", "", false)
+        ordersEntity.forEach { _order ->
+            val order = Order(
+                _order.uid,
+                _order.number,
+                _order.date,
+                _order.amount.toLong(),
+                _order.quantity.toLong(),
+                shop,
+                client,
+                address,
+                listOf(),
+                _order.comment,
+                Order.Status.values().first { it.key == _order.status },
+                Order.Method.values().first { it.key == _order.method }
+            )
+            orders.add(order)
+        }
+        return orders
     }
 
     fun mapNetworkUserToClient(iUser: IUser?): Client? {
@@ -313,8 +393,12 @@ class Mapper {
                 it.price.toLong(),
                 it.amount.toLong(),
                 it.quantity.toLong(),
+                "",
+                "",
+                Product.Category.values().first { value -> value.key == "" },
                 it.imagePath,
-                sizes
+                sizes,
+                ""
             )
             products.add(product)
         }
@@ -337,6 +421,7 @@ class Mapper {
         return IOrder(
             order.uid,
             order.number,
+            order.date,
             order.amount.toString(),
             order.quantity.toString(),
             order.comment,
@@ -366,6 +451,23 @@ class Mapper {
         return orderProducts
     }
 
+    fun mapProductToBaseProduct(product: Product): ProductEntity{
+        return ProductEntity(
+            product.uid,
+            product.shopUid,
+            product.name,
+            product.price,
+            product.amount,
+            product.quantity,
+            product.description,
+            product.gender,
+            product.category.key,
+            product.imagePath,
+            product.getSelectedSize().value,
+            product.productUid
+        )
+    }
+
     fun mapBaseProductToProduct(
         productsEntity: List<ProductEntity>,
         sizesEntity: List<SizeEntity>
@@ -373,7 +475,7 @@ class Mapper {
         val products: MutableList<Product> = mutableListOf()
         productsEntity.forEach {
             val sizes: List<Size> = sizesEntity.filter { sizeEntity ->
-                sizeEntity.uidProduct == it.uid
+                sizeEntity.uidProduct == it.productUid
             }.map { sizeEntity ->
                 val selected = it.size == sizeEntity.value
                 Size(sizeEntity.uid, sizeEntity.value, selected)
@@ -387,8 +489,12 @@ class Mapper {
                 it.price,
                 it.amount,
                 it.quantity,
+                it.description,
+                it.gender,
+                Product.Category.values().first { value -> value.key == it.category },
                 it.imagePath,
-                sizes
+                sizes,
+                it.productUid
             )
             products.add(product)
         }
@@ -405,8 +511,12 @@ class Mapper {
                 it.price,
                 it.amount,
                 it.quantity,
+                it.description,
+                it.gender,
+                it.category.key,
                 it.imagePath,
-                it.getSelectedSize().value
+                it.getSelectedSize().value,
+                it.productUid
             )
             productsEntity.add(productEntity)
         }
@@ -461,8 +571,12 @@ class Mapper {
             i_product.price.toLong(),
             0,
             0,
+            i_product.description,
+            i_product.gender,
+            Product.Category.values().first { value -> value.key == i_product.category },
             i_product.imagePath,
-            sizes
+            sizes,
+            ""
         )
     }
 }

@@ -45,13 +45,5 @@ class MapViewModel(
         return MapContract.State.Default
     }
 
-    override fun handleEvent(event: MapContract.Event) {
-        when (event) {
-            is MapContract.Event.OnClickComplete -> complete(event.address)
-        }
-    }
-
-    private fun complete(address: Address) {
-
-    }
+    override fun handleEvent(event: MapContract.Event) {}
 }

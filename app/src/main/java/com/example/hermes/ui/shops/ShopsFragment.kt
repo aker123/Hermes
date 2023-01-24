@@ -47,10 +47,12 @@ class ShopsFragment : Fragment() {
         initObservers()
         init()
 
+        toStateLoading()
         viewModel.getShops().observe(viewLifecycleOwner) {
             shops = it
             shopsSearch = it
             update()
+            toStateSetting()
             if (it != null) viewModel.setEvent(ShopsContract.Event.SaveShopsDB(it))
         }
 

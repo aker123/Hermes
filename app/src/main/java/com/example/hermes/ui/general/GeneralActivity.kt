@@ -35,6 +35,15 @@ class GeneralActivity: AppCompatActivity() {
         binding.viewPager2.adapter = adapter
     }
 
+    private fun exit() {
+        finishAffinity()
+    }
+
+    override fun onBackPressed() {
+        exit()
+        super.onBackPressed()
+    }
+
     private fun setEvents() {
         binding.bottomNavigation.setOnItemSelectedListener  { item ->
             when(item.itemId) {

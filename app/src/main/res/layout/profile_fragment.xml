@@ -78,6 +78,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/address"
-        app:drawableLeftCompat="@drawable/ic_exit_24" />
+        app:drawableLeftCompat="@drawable/ic_exit_24"
+        app:drawableTint="#BDB9B9" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/load"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

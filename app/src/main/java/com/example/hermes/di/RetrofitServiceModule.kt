@@ -33,14 +33,15 @@ class RetrofitServiceModule {
     @Singleton
     @Named("provideRetrofitService")
     fun provideRetrofitFobos(
-        @Named("providePicassoClient")
+        @Named("provideOkHttpClient")
         okHttpClient: OkHttpClient,
         @Named("provideConverterFactory")
         converterFactory: Converter.Factory
     ): Retrofit {
         return Retrofit.Builder()
             //        .baseUrl("http://192.168.89.2:8080/api/")
-            .baseUrl("https://10.0.3.2:7080/api/")
+          //  .baseUrl("https://10.0.3.2:7080/api/")
+            .baseUrl("http://akerson-001-site1.gtempurl.com/api/")
             .client(okHttpClient)
             .addConverterFactory(converterFactory)
             .build()

@@ -55,7 +55,13 @@ class OrdersAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
         @SuppressLint("SetTextI18n")
         fun bind(order: Order) {
             binding.numberOrder.text = binding.numberOrder.resources.getString(R.string.number,order.number)
-            binding.delivery.text = order.address?.street
+            binding.date.text = order.date
+            binding.methodObtaining.text = order.method.key
+            binding.delivery.text =
+                when (order.method) {
+                    Order.Method.DELIVERY -> order.address?.street
+                    Order.Method.PICKUP -> order.shop.physicalAddress
+                }
             val clientName = order.client.name
             val clientSurname = order.client.surname
             binding.client.text = "$clientName $clientSurname"

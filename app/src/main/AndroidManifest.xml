@@ -20,6 +20,7 @@
         android:allowClearUserData="false"
         android:allowTaskReparenting="true"
         android:persistent="true"
+        android:icon="@drawable/hermes"
         android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Hermes">

@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.hermes.databinding.ProfileFragmentBinding
 import com.example.hermes.domain.models.User
 import com.example.hermes.ui.address.AddressFragmentActivity
+import com.example.hermes.ui.entrance.EntranceActivity
+import com.example.hermes.ui.general.GeneralActivity
 import com.example.hermes.ui.orderHistory.OrderHistoryFragmentActivity
 import com.example.hermes.ui.profileManager.ProfileManagerFragmentActivity
 import com.google.android.material.snackbar.Snackbar
@@ -40,7 +43,6 @@ class ProfileFragment: Fragment() {
         initObservers()
 
         user = viewModel.getUser()
-        update()
 
         binding.historyOrders.setOnClickListener {
             viewModel.setEvent(ProfileContract.Event.OnClickOrderHistory)
@@ -71,8 +73,8 @@ class ProfileFragment: Fragment() {
             viewModel.uiState.collect { state ->
                 when (state) {
                     ProfileContract.State.Default -> {}
-                    ProfileContract.State.Setting -> {}
-                    ProfileContract.State.Loading -> {}
+                    ProfileContract.State.Setting -> toStateSetting()
+                    ProfileContract.State.Loading -> toStateLoading()
                 }
             }
         }
@@ -86,6 +88,13 @@ class ProfileFragment: Fragment() {
                         }
                     }
                     is ProfileContract.Effect.OnExit -> {
+                        val i = Intent()
+                        activity?.let { i.setClass(it, EntranceActivity::class.java) }
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        i.putExtra("EXIT", true)
+                        startActivity(i)
                         activity?.finish()
                     }
                     is ProfileContract.Effect.OnOrderHistoryFragmentActivity -> {
@@ -114,11 +123,20 @@ class ProfileFragment: Fragment() {
 
                         startActivity(i)
                     }
+                    is ProfileContract.Effect.Update -> update()
+
                 }
             }
         }
     }
 
+    private fun toStateSetting() {
+        binding.load.isVisible = false
+    }
+
+    private fun toStateLoading() {
+        binding.load.isVisible = true
+    }
 
         private fun showMessage(message: String) {
             Snackbar

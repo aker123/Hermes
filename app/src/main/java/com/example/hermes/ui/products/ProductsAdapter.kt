@@ -1,28 +1,25 @@
 package com.example.hermes.ui.products
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hermes.R
-import com.example.hermes.databinding.ChipChoiceBinding
-import com.example.hermes.databinding.ProductsItemBinding
+import com.example.hermes.databinding.*
 import com.example.hermes.domain.models.Product
 import com.google.android.material.chip.Chip
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import ru.aptrade.fobos30.UI.FobosInterfaceLibrary.Adapters.util.DefaultDiffCallback
+import java.lang.Exception
 
 class ProductsAdapter(
     val picasso: Picasso
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     var onItemClickListener: OnItemClickListener? = null
-    var onAddClickListener: OnAddClickListener? = null
-    var onRemoveClickListener: OnRemoveClickListener? = null
-    var onPriceClickListener: OnPriceClickListener? = null
-    var onCheckedStateChangeListener : OnCheckedStateChangeListener ? = null
+    var onAddBasketClickListener: OnAddBasketClickListener? = null
+    var onCheckedStateChangeListener: OnCheckedStateChangeListener? = null
 
     var items: List<Product> = listOf()
         set(value) {
@@ -42,8 +39,7 @@ class ProductsAdapter(
             result.dispatchUpdatesTo(this)
         }
 
-
-    inner class ItemHolder(
+    inner class ItemViewHolder(
         private val binding: ProductsItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -58,35 +54,16 @@ class ProductsAdapter(
                 if (pos == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
-
                 onItemClickListener?.onItemClick(_items[pos])
             }
 
-            binding.addBtn.setOnClickListener {
+            binding.addBasket.setOnClickListener {
                 val pos = adapterPosition
                 if (pos == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
 
-                onAddClickListener?.onAddClick(_items[pos])
-            }
-
-            binding.removeBtn.setOnClickListener {
-                val pos = adapterPosition
-                if (pos == RecyclerView.NO_POSITION) {
-                    return@setOnClickListener
-                }
-
-                onRemoveClickListener?.onRemoveClick(_items[pos])
-            }
-
-            binding.priceBtn.setOnClickListener {
-                val pos = adapterPosition
-                if (pos == RecyclerView.NO_POSITION) {
-                    return@setOnClickListener
-                }
-
-                onPriceClickListener?.onPriceClick(_items[pos])
+                onAddBasketClickListener?.onAddBasketClick(_items[pos])
             }
 
             binding.sizes.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -94,9 +71,12 @@ class ProductsAdapter(
                 if (pos == RecyclerView.NO_POSITION) {
                     return@setOnCheckedStateChangeListener
                 }
-                var chip: Chip? =  null
-                  if (checkedIds.isNotEmpty())  chip = group.findViewById(checkedIds[0])
-                onCheckedStateChangeListener?.onCheckedStateChange(_items[pos],chip?.text?.toString() ?: "")
+                var chip: Chip? = null
+                if (checkedIds.isNotEmpty()) chip = group.findViewById(checkedIds[0])
+                onCheckedStateChangeListener?.onCheckedStateChange(
+                    _items[pos],
+                    chip?.text?.toString() ?: ""
+                )
             }
         }
 
@@ -112,13 +92,9 @@ class ProductsAdapter(
                 }
             }
 
-            binding.layoutQuantity.isVisible = product.quantity > 0
-            binding.priceBtn.isVisible = product.quantity == 0L
             binding.name.text = product.name
-            if (product.amount == 0L) binding.amount.text = ""
-            else binding.amount.text = product.amount.toString()
-            binding.quantity.text = product.quantity.toString()
-            binding.priceBtn.text = product.price.toString()
+            binding.price.text =
+                binding.price.resources.getString(R.string.price, product.price.toString())
         }
     }
 
@@ -126,13 +102,13 @@ class ProductsAdapter(
         val binding = ProductsItemBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return ItemHolder(binding)
+        return ItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = _items[position]
         when (holder) {
-            is ItemHolder -> holder.bind(item)
+            is ItemViewHolder -> holder.bind(item)
         }
     }
 
@@ -144,19 +120,11 @@ class ProductsAdapter(
         fun onItemClick(product: Product)
     }
 
-    fun interface OnAddClickListener {
-        fun onAddClick(product: Product)
-    }
-
     fun interface OnCheckedStateChangeListener {
         fun onCheckedStateChange(product: Product, size: String)
     }
 
-    fun interface OnRemoveClickListener {
-        fun onRemoveClick(product: Product)
-    }
-
-    fun interface OnPriceClickListener {
-        fun onPriceClick(product: Product)
+    fun interface OnAddBasketClickListener {
+        fun onAddBasketClick(product: Product)
     }
 }

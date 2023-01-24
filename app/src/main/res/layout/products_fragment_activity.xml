@@ -26,6 +26,53 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <HorizontalScrollView
+        android:id="@+id/scrollGender"
+        android:layout_margin="5dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parent_topAppBar">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/genders"
+            app:singleSelection="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true" />
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/line"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F4F0F0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scrollCategories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollGender"/>
+
+    <HorizontalScrollView
+        android:id="@+id/scrollCategories"
+        android:layout_margin="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollGender">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/categories"
+            app:singleSelection="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true" />
+    </HorizontalScrollView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -33,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/parent_topAppBar"
+        app:layout_constraintTop_toBottomOf="@id/scrollCategories"
         tools:listitem="@layout/products_item"/>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -48,22 +95,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parent_topAppBar"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/on_basket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:tint="@color/grey"
-        app:rippleColor="@android:color/white"
         app:backgroundTint="@color/white"
-        android:visibility="gone"
+        android:padding="5dp"
+        android:textSize="12sp"
+        app:iconGravity="start"
+        android:textAlignment="textEnd"
+        android:text="@string/products_to_basket"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:iconSize="19sp"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/descr_None"
-        app:srcCompat="@drawable/ic_basket_24"/>
+        app:icon="@drawable/ic_basket_24"
+        app:iconTint="@color/grey"
+        app:rippleColor="@color/main"
+        android:textColor="@color/main"/>
 
     <TextView
         android:id="@+id/message"

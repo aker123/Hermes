@@ -87,6 +87,7 @@ class OrderManagerFragmentActivity : FragmentActivity() {
         binding.order.amount.text = binding.order.amount.resources.getString(R.string.price,order.amount.toString())
         binding.order.quantity.text = order.quantity.toString()
         binding.order.numberOrder.text = binding.order.numberOrder.resources.getString(R.string.number,order.number)
+        binding.order.date.text = order.date
         binding.order.comment.text = order.comment
         binding.order.status.text = order.status.key
 

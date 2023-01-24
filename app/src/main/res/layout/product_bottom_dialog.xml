@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:id="@+id/standard_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="5dp"
+        android:contentDescription="@string/descr_None"
+        app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp" />
+
+        <TextView
+            android:text="@string/product_size_choice"
+            android:textStyle="italic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/sizes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:singleSelection="true" />
+    </HorizontalScrollView>
+
+        <View
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F4F0F0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            app:iconSize="18dp"
+            android:layout_margin="5dp"
+            android:textSize="12sp"
+            android:padding="5dp"
+            app:icon="@drawable/ic_add_basket_24"
+            app:iconTint="@color/main"
+            app:rippleColor="@color/main"
+            android:textColor="@color/main"
+            android:text="@string/product_add_basket"
+            app:backgroundTint="@color/white"
+            android:contentDescription="@string/product_add_basket"
+            tools:ignore="SmallSp"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

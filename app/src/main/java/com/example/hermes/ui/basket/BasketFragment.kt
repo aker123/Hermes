@@ -15,11 +15,15 @@ import com.example.hermes.databinding.BasketFragmentBinding
 import com.example.hermes.domain.models.Client
 import com.example.hermes.domain.models.Order
 import com.example.hermes.domain.models.Product
-import com.example.hermes.ui.PickupBottomDialog
+import com.example.hermes.ui.pickup.PickupBottomDialog
 import com.example.hermes.ui.delivery.DeliveryFragmentActivity
 import com.example.hermes.ui.general.GeneralActivity
+import com.example.hermes.ui.productItem.BasketBottomDialog
+import com.example.hermes.ui.productItem.ProductBottomDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
 import java.util.*
 
 class BasketFragment : Fragment() {
@@ -27,7 +31,7 @@ class BasketFragment : Fragment() {
     private var _binding: BasketFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private var selectedProducts: MutableList<Product> = mutableListOf()
+    var selectedProducts: MutableList<Product> = mutableListOf()
 
     private var adapter: BasketAdapter? = null
 
@@ -36,6 +40,8 @@ class BasketFragment : Fragment() {
 
     var isDelivery: Boolean? = null
     private var isPickup: Boolean? = null
+
+    lateinit var picasso: Picasso
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,19 +59,31 @@ class BasketFragment : Fragment() {
         initObservers()
         init()
 
-        viewModel.getSelectedProducts().let {
-            selectedProducts = it.toMutableList()
-            binding.onDelivery.isVisible =
-                selectedProducts.any { product -> product.quantity > 0 && product.sizes.any { size -> size.selected } }
-        }
-
         binding.topAppBar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
 
-
         adapter?.onItemClickListener = BasketAdapter.OnItemClickListener {
-            viewModel.setEvent(BasketContract.Event.OnClickProduct(it))
+            val basketBottomDialog = BasketBottomDialog(
+                it, picasso
+            ) { product, isDelete ->
+                val productCurrent = selectedProducts.first { productCurrent -> productCurrent.uid == product.uid }
+                if (isDelete) {
+                    viewModel.setEvent(BasketContract.Event.RemoveProductBase(productCurrent))
+                    selectedProducts.remove(productCurrent)
+                } else {
+                    productCurrent.quantity = product.quantity
+                    productCurrent.sizes = product.sizes
+                    productCurrent.amount = product.amount
+                }
+                update()
+            }
+            activity?.supportFragmentManager?.let { it1 ->
+                basketBottomDialog.show(
+                    it1,
+                    BasketBottomDialog.TAG
+                )
+            }
         }
 
 
@@ -86,7 +104,11 @@ class BasketFragment : Fragment() {
             }
             if (isDelivery == null && isPickup == null) showMessage(R.string.basket_need_change_method)
             when (true) {
-                isDelivery -> viewModel.setEvent(BasketContract.Event.OnClickDelivery(selectedProducts))
+                isDelivery -> viewModel.setEvent(
+                    BasketContract.Event.OnClickDelivery(
+                        selectedProducts
+                    )
+                )
                 isPickup -> viewModel.setEvent(BasketContract.Event.OnClickPickup(selectedProducts))
                 else -> return@setOnClickListener
             }
@@ -128,9 +150,15 @@ class BasketFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getSelectedProducts(selectedProducts)
+    }
+
     private fun init() {
-       if (!isVisibleBack) binding.topAppBar.navigationIcon = null
-        adapter = BasketAdapter(viewModel.getPicasso())
+        picasso = viewModel.getPicasso()
+        if (!isVisibleBack) binding.topAppBar.navigationIcon = null
+        adapter = BasketAdapter(picasso)
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
@@ -157,11 +185,9 @@ class BasketFragment : Fragment() {
                         }
                     }
                     is BasketContract.Effect.Update -> {
-                        binding.onDelivery.isVisible =
-                            selectedProducts.any { product -> product.quantity > 0 && product.sizes.any { size -> size.selected } }
                         effect.products?.let { selectedProducts = it.toMutableList() }
-
-                        update()
+                        effect.isNeedUpdate?.let { if (it) update() else checkCountSelectedProducts() }
+                            ?: update()
                     }
                     is BasketContract.Effect.ShowDialogMessage -> {
                         context?.let {
@@ -171,9 +197,8 @@ class BasketFragment : Fragment() {
                                     dialog.cancel()
                                 }
                                 .setPositiveButton(R.string.basket_yes) { dialog, which ->
+                                    viewModel.setEvent(BasketContract.Event.RemoveProductBase(effect.product))
                                     selectedProducts.remove(effect.product)
-                                    binding.onDelivery.isVisible =
-                                        selectedProducts.any { product -> product.quantity > 0 && product.sizes.any { size -> size.selected } }
                                     update()
                                 }
                                 .show()
@@ -187,43 +212,57 @@ class BasketFragment : Fragment() {
                         startActivity(i)
                     }
                     is BasketContract.Effect.OnPickupBottomDialog -> {
-                        val pickupBottomDialog = PickupBottomDialog(effect.orderProducts.shop , object : PickupBottomDialog.OnClickSendOrderListener{
-                            override fun onClickSendOrder(comment: String) {
-                                val amount = effect.orderProducts.products?.sumOf { it.amount } ?: return
-                                val quantity = effect.orderProducts.products.sumOf { it.quantity }
+                        val pickupBottomDialog = PickupBottomDialog(
+                            effect.orderProducts.shop,
+                            object : PickupBottomDialog.OnClickSendOrderListener {
+                                override fun onClickSendOrder(comment: String) {
+                                    val amount =
+                                        effect.orderProducts.products?.sumOf { it.amount } ?: return
+                                    val quantity =
+                                        effect.orderProducts.products.sumOf { it.quantity }
 
-                                val client = Client(
-                                    effect.orderProducts.user.uid,
-                                    effect.orderProducts.user.surname,
-                                    effect.orderProducts.user.name,
-                                    effect.orderProducts.user.phoneNumber,
-                                    effect.orderProducts.user.mail
-                                )
+                                    val client = Client(
+                                        effect.orderProducts.user.uid,
+                                        effect.orderProducts.user.surname,
+                                        effect.orderProducts.user.name,
+                                        effect.orderProducts.user.phoneNumber,
+                                        effect.orderProducts.user.mail
+                                    )
 
-                                val number = Random().nextInt(1000000 - 99999) + 99999
+                                    val number = Random().nextInt(1000000 - 99999) + 99999
+                                    val dateFormat =
+                                        SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.getDefault())
+                                    val date = dateFormat.format(Date()).toString()
 
-                                val order = Order(
-                                    UUID.randomUUID().toString(),
-                                    number.toString(),
-                                    amount,
-                                    quantity,
-                                    effect.orderProducts.shop,
-                                    client,
-                                    null,
-                                    effect.orderProducts.products,
-                                    comment,
-                                    Order.Status.NEW,
-                                    Order.Method.PICKUP
-                                )
-                                viewModel.setEvent(BasketContract.Event.OnClickSendOrder(order))
-                            }
-                        })
-                        activity?.supportFragmentManager?.let { pickupBottomDialog.show(it, PickupBottomDialog.TAG) }
+                                    val order = Order(
+                                        UUID.randomUUID().toString(),
+                                        number.toString(),
+                                        date,
+                                        amount,
+                                        quantity,
+                                        effect.orderProducts.shop,
+                                        client,
+                                        null,
+                                        effect.orderProducts.products,
+                                        comment,
+                                        Order.Status.NEW,
+                                        Order.Method.PICKUP
+                                    )
+                                    viewModel.setEvent(BasketContract.Event.OnClickSendOrder(order))
+                                }
+                            })
+                        activity?.supportFragmentManager?.let {
+                            pickupBottomDialog.show(
+                                it,
+                                PickupBottomDialog.TAG
+                            )
+                        }
                     }
                     is BasketContract.Effect.OnGeneralActivity -> {
                         val i = Intent()
                         activity?.let { i.setClass(it, GeneralActivity::class.java) }
                         startActivity(i)
+                        activity?.finish()
                     }
                 }
             }
@@ -233,6 +272,12 @@ class BasketFragment : Fragment() {
 
     private fun update() {
         adapter?.items = selectedProducts
+        checkCountSelectedProducts()
+    }
+
+    private fun checkCountSelectedProducts() {
+        binding.onDelivery.isVisible =
+            selectedProducts.any { product -> product.quantity > 0 && product.sizes.any { size -> size.selected } }
         if (adapter?.itemCount == 0) {
             binding.chipDelivery.isVisible = false
             binding.chipPickup.isVisible = false
@@ -248,18 +293,10 @@ class BasketFragment : Fragment() {
     }
 
     private fun toStateSetting() {
-        binding.chipDelivery.isVisible = true
-        binding.chipPickup.isVisible = true
-        binding.recyclerView.isVisible = true
-        binding.onDelivery.isVisible = true
         binding.load.isVisible = false
     }
 
     private fun toStateLoading() {
-        binding.chipDelivery.isVisible = false
-        binding.chipPickup.isVisible = false
-        binding.recyclerView.isVisible = false
-        binding.onDelivery.isVisible = false
         binding.load.isVisible = true
     }
 

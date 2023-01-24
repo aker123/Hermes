@@ -6,19 +6,17 @@ import com.example.hermes.domain.models.Product
 import com.example.hermes.ui.base.UiEffect
 import com.example.hermes.ui.base.UiEvent
 import com.example.hermes.ui.base.UiState
-import com.example.hermes.ui.delivery.DeliveryContract
-import com.example.hermes.ui.products.ProductsContract
 
 class BasketContract {
 
     sealed class Event: UiEvent {
-        class OnClickProduct(
-            val product: Product
-        ) : Event()
         class OnClickAdd(
             val product: Product
         ): Event()
         class OnClickRemove(
+            val product: Product
+        ): Event()
+        class RemoveProductBase(
             val product: Product
         ): Event()
         class OnClickDelivery(
@@ -52,7 +50,8 @@ class BasketContract {
             val product: Product
         ) : Effect()
         class Update(
-            val products: List<Product>? = null
+            val products: List<Product>? = null,
+            val isNeedUpdate: Boolean? = null
         ): Effect()
         class OnDeliveryFragmentActivity(
             val orderProducts: OrderProducts

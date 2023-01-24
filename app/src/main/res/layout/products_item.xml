@@ -22,118 +22,81 @@
                 android:id="@+id/image"
                 android:layout_width="200dp"
                 android:layout_height="150dp"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription,MissingConstraints"/>
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
                 android:textSize="20sp"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.68" />
+
             <TextView
-                android:id="@+id/amount"
+                android:id="@+id/price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
+                android:textColor="@color/main"
                 android:textSize="16sp"
-                app:layout_constraintVertical_bias="0"
                 app:layout_constraintBottom_toTopOf="@id/scroll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name" />
+                app:layout_constraintTop_toBottomOf="@id/guideline" />
 
             <HorizontalScrollView
                 android:id="@+id/scroll"
-                android:layout_margin="2dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amount">
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/sizes"
-                app:singleSelection="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleLine="true" />
-        </HorizontalScrollView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/price_btn"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:textSize="12sp"
-                android:textAlignment="center"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scroll">
-            </com.google.android.material.button.MaterialButton>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_quantity"
-                android:layout_width="0dp"
                 android:layout_margin="5dp"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toTopOf="@id/add_basket"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/sizes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true" />
+            </HorizontalScrollView>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/add_basket"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:layout_margin="3dp"
+                android:contentDescription="@string/products_add_basket"
+                android:padding="5dp"
+                android:text="@string/products_add_basket"
+                android:textColor="@color/main"
+                android:textSize="12sp"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/ic_add_basket_24"
+                app:iconSize="18dp"
+                app:iconTint="@color/main"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scroll">
-
-                <ImageButton
-                    android:id="@+id/remove_btn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/ic_remove_24"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/quantity"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription,MissingConstraints"/>
-
-                <TextView
-                    android:id="@+id/quantity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/add_btn"
-                    app:layout_constraintStart_toEndOf="@id/remove_btn"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/add_btn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_add_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/quantity"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription,MissingConstraints"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/scroll"
+                app:rippleColor="@color/main"
+                tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.balysv.materialripple.MaterialRippleLayout>
 </androidx.cardview.widget.CardView>

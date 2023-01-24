@@ -24,6 +24,11 @@ class ProductsRepository(
     private val mapper: Mapper
 ) {
 
+
+    fun deleteProduct(product: Product) {
+        productsDao.deleteProduct(mapper.mapProductToBaseProduct(product))
+    }
+
     fun deleteProducts() {
         productsDao.clearingProducts()
     }
@@ -34,10 +39,14 @@ class ProductsRepository(
     }
 
     fun saveProducts(shop: Shop, products: List<Product>) {
-        productsDao.clearingProducts()
         val productsEntity = mapper.mapProductToBaseProduct(shop, products)
         productsDao.insertProducts(productsEntity)
 
+    }
+
+    fun saveProduct(product: Product) {
+        val productsEntity = mapper.mapProductToBaseProduct(product)
+        productsDao.insertProduct(productsEntity)
     }
 
     fun getProducts(shop: Shop): MutableLiveData<List<Product>?> {

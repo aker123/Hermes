@@ -1,9 +1,11 @@
 package com.example.hermes.ui.delivery
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +18,9 @@ import com.example.hermes.domain.models.OrderProducts
 import com.example.hermes.ui.general.GeneralActivity
 import com.example.hermes.ui.map.MapDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -83,9 +88,13 @@ class DeliveryFragmentActivity : FragmentActivity() {
 
             val number = Random().nextInt(1000000 - 99999) + 99999
 
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.getDefault())
+            val date = dateFormat.format(Date()).toString()
+
             val order = Order(
                 UUID.randomUUID().toString(),
                 number.toString(),
+                date,
                 amount,
                 quantity,
                 orderProducts!!.shop,

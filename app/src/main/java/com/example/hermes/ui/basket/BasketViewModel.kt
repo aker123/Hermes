@@ -8,6 +8,7 @@ import com.example.hermes.domain.models.Order
 import com.example.hermes.domain.models.OrderProducts
 import com.example.hermes.domain.models.Product
 import com.example.hermes.domain.usecase.delete.ClearBasketUseCase
+import com.example.hermes.domain.usecase.delete.DeleteProductDBUseCase
 import com.example.hermes.domain.usecase.get.GetPicassoUseCase
 import com.example.hermes.domain.usecase.get.GetSelectedProductsUseCase
 import com.example.hermes.domain.usecase.get.GetShopDBUseCase
@@ -50,6 +51,9 @@ class BasketViewModel(
     @Inject
     lateinit var sendOrderUseCase: SendOrderUseCase
 
+    @Inject
+    lateinit var deleteProductDBUseCase: DeleteProductDBUseCase
+
     init {
         (application as Hermes).appComponent?.inject(this)
     }
@@ -58,19 +62,23 @@ class BasketViewModel(
         return getPicassoUseCase.execute()
     }
 
-    fun getSelectedProducts(): List<Product> {
+    fun getSelectedProducts(currentProducts: List<Product>){
         var products: List<Product> = listOf()
-        viewModelScope.launch {
+        var needUpdate = false
+        viewModelScope.launch(Dispatchers.IO) {
             setState { BasketContract.State.Loading }
             try {
                 products = getSelectedProductsUseCase.execute()
             } catch (e: Exception) {
                 setEffect { BasketContract.Effect.ShowMessage(R.string.basket_error) }
             }
-            setEffect { BasketContract.Effect.Update(products) }
+            products.forEach { product ->
+                if (currentProducts.none { current -> product.uid == current.uid })
+                    needUpdate = true
+            }
+            setEffect { BasketContract.Effect.Update(products, needUpdate) }
             setState { BasketContract.State.Setting }
         }
-        return products
     }
 
     override fun createInitialState(): BasketContract.State {
@@ -79,7 +87,6 @@ class BasketViewModel(
 
     override fun handleEvent(event: BasketContract.Event) {
         when (event) {
-            is BasketContract.Event.OnClickProduct -> clickProduct(event.product)
             is BasketContract.Event.OnClickAdd -> {
                 viewModelScope.launch {
                     event.product.quantity = event.product.quantity + 1
@@ -126,7 +133,6 @@ class BasketViewModel(
                     event.product.sizes.forEach {
                         it.selected = it.value == event.size
                     }
-                    setEffect { BasketContract.Effect.Update() }
                 }
             }
             is BasketContract.Event.OnClearBasket -> {
@@ -136,6 +142,12 @@ class BasketViewModel(
                 }
             }
             is BasketContract.Event.OnClickSendOrder -> clickSendOrder(event.order)
+            is BasketContract.Event.RemoveProductBase -> {
+                viewModelScope.launch {
+                    deleteProductDBUseCase.execute(event.product)
+                    setEffect { BasketContract.Effect.Update() }
+                }
+            }
         }
     }
 
@@ -160,10 +172,6 @@ class BasketViewModel(
 
             setState { BasketContract.State.Setting }
         }
-    }
-
-    private fun clickProduct(product: Product) {
-
     }
 
 }

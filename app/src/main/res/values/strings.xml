@@ -11,6 +11,7 @@
     <string name="mes_no_filters">Фильтры отсутствуют</string>
     <string name="cap_filters">Фильтры</string>
     <string name="quantity">%1$s  x</string>
+    <string name="order_dif">Статус заказа с номером - %1$s\nИзменен на \'%2$s\'</string>
 
     <!--    region RegistrationFragment-->
     <string name="registration_person_name_title">Имя</string>
@@ -43,6 +44,7 @@
     <!--    region EntranceActivity-->
     <string name="entrance_tab_authorization">Вход</string>
     <string name="entrance_tab_registration">Регистация</string>
+    <string name="entrance_error">Ошибка</string>
     <!--endregion    -->
 
     <!--    region BasketFragment-->
@@ -79,7 +81,17 @@
     <string name="products_error">Ошибка</string>
     <string name="products_not_products">Товары отсутствуют</string>
     <string name="products_not_found_products">Ничего не найдено</string>
-    <string name="products_not_correct_size">Необходимо проставить на все выбранные позиции - размер</string>
+    <string name="products_add_basket">В корзину</string>
+    <string name="products_not_correct_size">Необходимо выбрать размер</string>
+    <string name="products_clear_basket">Очистить корзину для нового заказа?</string>
+    <string name="products_clear">Очистить</string>
+    <string name="products_to_leave">Оставить</string>
+    <string name="products_to_basket">Перейти в корзину</string>
+
+    <string name="products_men_clothing">Мужская одежда</string>
+    <string name="products_women_clothing">Женская одежда</string>
+    <string name="products_man">муж</string>
+    <string name="products_woman">жен</string>
     <!--endregion    -->
 
     <!--    region DeliveryFragmentActivity-->
@@ -97,8 +109,9 @@
 
     <!--    region OrderHistoryFragment-->
     <string name="order_history_not_orders">Нет заказов</string>
-
-
+    <string name="order_history_error_not_connection">Не удалось подключиться к серверу</string>
+    <string name="order_history_mes_server_error">Возникла ошибка на сервере</string>
+    <string name="order_history_error">Ошибка</string>
     <!--endregion    -->
 
     <!--    region OrderManagerActivityFragment-->
@@ -216,5 +229,16 @@
     <string name="order_cancelled">Отменен</string>
     <string name="order_refund">Возврат</string>
 
+    <!--endregion    -->
+
+    <!--    region ProductBottomDialog-->
+    <string name="product_add_basket">В корзину</string>
+    <string name="product_size_choice">Выберите размер</string>
+    <!--endregion    -->
+
+    <!--    region BasketBottomDialog-->
+    <string name="basket_done">Готово</string>
+    <string name="basket_delete">Удалить</string>
+    <string name="basket_size_choice">Выберите размер</string>
     <!--endregion    -->
 </resources>

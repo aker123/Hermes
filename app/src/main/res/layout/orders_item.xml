@@ -24,9 +24,34 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@id/date"
+                app:layout_constraintEnd_toStartOf="@id/method_obtaining"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintBottom_toTopOf="@id/delivery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintTop_toBottomOf="@id/number_order" />
+
+            <TextView
+                android:id="@+id/method_obtaining"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="textEnd"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@id/delivery"
                 app:layout_constraintEnd_toStartOf="@id/status"
-                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintStart_toEndOf="@id/number_order"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -38,7 +63,7 @@
                 app:layout_constraintBottom_toTopOf="@id/client"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/number_order" />
+                app:layout_constraintTop_toBottomOf="@id/date" />
 
             <TextView
                 android:id="@+id/client"
@@ -63,7 +88,7 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/delivery"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/number_order"
+                app:layout_constraintStart_toEndOf="@id/method_obtaining"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

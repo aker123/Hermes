@@ -27,7 +27,6 @@ class AddressManagerContract {
         class ShowMessage<T>(
             val message: T
         ) : Effect()
-
         class OnCallBackDelete(
             val address: Address
         ) : Effect()

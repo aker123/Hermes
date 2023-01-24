@@ -8,11 +8,7 @@ import com.example.hermes.ui.delivery.DeliveryContract
 
 class MapContract {
 
-    sealed class Event: UiEvent {
-        class OnClickComplete(
-            val address: Address
-        ) : Event()
-    }
+    sealed class Event: UiEvent
 
     sealed class State: UiState {
         object Default : State()

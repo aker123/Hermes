@@ -1,8 +1,11 @@
 package com.example.hermes.domain.models
 
+import java.util.*
+
 class Order(
     val uid: String,
     val number: String,
+    val date: String,
     val amount: Long,
     val quantity: Long,
     val shop: Shop,

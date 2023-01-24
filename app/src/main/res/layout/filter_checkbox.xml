@@ -43,8 +43,17 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/subName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:layout_marginTop="5dp"/>
         </LinearLayout>
 
         <ImageView

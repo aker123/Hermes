@@ -2,6 +2,8 @@ package com.example.hermes.ui.basket
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.children
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hermes.R
@@ -10,6 +12,7 @@ import com.example.hermes.databinding.ChipChoiceBinding
 import com.example.hermes.domain.models.Product
 import com.example.hermes.ui.products.ProductsAdapter
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.squareup.picasso.Picasso
 import ru.aptrade.fobos30.UI.FobosInterfaceLibrary.Adapters.util.DefaultDiffCallback
 
@@ -20,7 +23,7 @@ class BasketAdapter(
     var onItemClickListener: OnItemClickListener? = null
     var onAddClickListener: OnAddClickListener? = null
     var onRemoveClickListener: OnRemoveClickListener? = null
-    var onCheckedStateChangeListener : OnCheckedStateChangeListener? = null
+    var onCheckedStateChangeListener: OnCheckedStateChangeListener? = null
 
     var items: List<Product> = listOf()
         set(value) {
@@ -82,9 +85,12 @@ class BasketAdapter(
                 if (pos == RecyclerView.NO_POSITION) {
                     return@setOnCheckedStateChangeListener
                 }
-                var chip: Chip? =  null
-                if (checkedIds.isNotEmpty())  chip = group.findViewById(checkedIds[0])
-                onCheckedStateChangeListener?.onCheckedStateChange(_items[pos],chip?.text?.toString() ?: "")
+                var chip: Chip? = null
+                if (checkedIds.isNotEmpty()) chip = group.findViewById(checkedIds[0])
+                onCheckedStateChangeListener?.onCheckedStateChange(
+                    _items[pos],
+                    chip?.text?.toString() ?: ""
+                )
             }
         }
 
@@ -99,10 +105,19 @@ class BasketAdapter(
                     chip.root.isChecked = size.selected
                     binding.sizes.addView(chip.root)
                 }
+            } else {
+                binding.sizes.children.toList().forEach {
+                    if (it is Chip) {
+                        it.isChecked =
+                            product.sizes.firstOrNull { size -> it.text == size.value }?.selected
+                                ?: false
+                    }
+                }
             }
 
             binding.name.text = product.name
-            binding.amount.text = product.amount.toString()
+            binding.amount.text =
+                binding.amount.resources.getString(R.string.price, product.amount.toString())
             binding.quantity.text = product.quantity.toString()
         }
     }

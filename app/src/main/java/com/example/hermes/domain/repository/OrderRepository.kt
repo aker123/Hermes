@@ -2,6 +2,7 @@ package com.example.hermes.domain.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.hermes.domain.Mapper
+import com.example.hermes.domain.data.local.orders.OrdersDao
 import com.example.hermes.domain.data.network.order.OrderApiManager
 import com.example.hermes.domain.data.network.order.models.IOrder
 import com.example.hermes.domain.data.network.order.models.IOrderProduct
@@ -13,6 +14,7 @@ import retrofit2.Response
 
 class OrderRepository(
     private val orderApiManager: OrderApiManager,
+    private val ordersDao: OrdersDao,
     private val mapper: Mapper
 ) {
 
@@ -23,6 +25,15 @@ class OrderRepository(
         orderApiManager.setOrderProducts(mapper.mapToNetworkOrderProducts(order))
 
         if (order.address != null) orderApiManager.setDelivery(mapper.mapToNetworkDelivery(order.address))
+
+        ordersDao.insertOrders(mapper.mapOrdersToOrdersDB(order))
+    }
+
+
+    fun updateOrderDB(orders: List<Order>){
+        orders.forEach { order ->
+            ordersDao.insertOrders(mapper.mapOrdersToOrdersDB(order))
+        }
     }
 
     fun sendOrderStatus(order: Order) {
@@ -129,6 +140,10 @@ class OrderRepository(
         return orders
     }
 
+    fun getOrdersHeader(user: User): List<Order> {
+        return mapper.mapNetworkOrdersHeaderToOrdersHeader(orderApiManager.getOrdersHeader(user.uid))
+    }
+
 
     fun getOrderHistory(user: User): MutableLiveData<List<Order>?> {
         val orders: MutableLiveData<List<Order>?> = MutableLiveData<List<Order>?>()
@@ -182,6 +197,9 @@ class OrderRepository(
         return orders
     }
 
+    fun getOrdersDB(): List<Order> {
+        return mapper.mapOrdersDBToOrders(ordersDao.getOrders())
+    }
 
     fun getOrderProducts(order: Order): MutableLiveData<List<Product>?> {
         val products: MutableLiveData<List<Product>?> = MutableLiveData<List<Product>?>()

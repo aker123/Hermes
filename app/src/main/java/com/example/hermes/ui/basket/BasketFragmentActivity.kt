@@ -30,7 +30,14 @@ class BasketFragmentActivity: FragmentActivity() {
                 }
             }
         }
+    }
 
+    private fun exit() {
+        finish()
+    }
 
+    override fun onBackPressed() {
+        exit()
+        super.onBackPressed()
     }
 }

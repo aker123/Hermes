@@ -37,6 +37,11 @@ class OrderApiManager(
         response?.enqueue(callback)
     }
 
+    fun getOrdersHeader(userUid: String): List<IOrder?>? {
+        val response = orderApi.getOrderHistory(userUid)?.execute()
+        return response?.body()
+    }
+
     fun getActiveOrders(userUid: String, callback: Callback<List<IOrder?>?>){
         val response = orderApi.getActiveOrders(userUid)
         response?.enqueue(callback)

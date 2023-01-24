@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,6 +24,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginStart="5dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintBottom_toTopOf="@id/comment"
+            app:layout_constraintEnd_toStartOf="@id/status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/number_order" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/status"
             app:iconGravity="end"
@@ -35,7 +47,7 @@
             android:textSize="12sp"
             android:textColor="@color/main"
             android:background="@color/transparent"
-            app:layout_constraintBottom_toTopOf="@id/amount"
+            app:layout_constraintBottom_toTopOf="@id/price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/number_order"
             app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +92,7 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintEnd_toStartOf="@id/status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/number_order"
+            app:layout_constraintTop_toBottomOf="@id/date"
             app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

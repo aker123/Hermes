@@ -6,6 +6,7 @@ import com.example.hermes.ui.authorization.AuthorizationViewModel
 import com.example.hermes.ui.basket.BasketViewModel
 import com.example.hermes.ui.delivery.DeliveryViewModel
 import com.example.hermes.ui.entrance.EntranceActivity
+import com.example.hermes.ui.entrance.EntranceViewModel
 import com.example.hermes.ui.map.MapViewModel
 import com.example.hermes.ui.orderHistory.OrderHistoryViewModel
 import com.example.hermes.ui.orderManager.OrderManagerViewModel
@@ -40,10 +41,8 @@ interface AppComponent {
     fun inject(productsViewModel: ProductsViewModel)
     fun inject(basketViewModel: BasketViewModel)
     fun inject(deliveryViewModel: DeliveryViewModel)
-    fun inject(entranceActivity: EntranceActivity)
     fun inject(ordersViewModel: OrdersViewModel)
     fun inject(orderManagerViewModel: OrderManagerViewModel)
-    fun inject(ordersActivity: OrdersActivity)
     fun inject(orderHistoryViewModel: OrderHistoryViewModel)
     fun inject(paymentViewModel: PaymentViewModel)
     fun inject(profileViewModel: ProfileViewModel)
@@ -51,4 +50,5 @@ interface AppComponent {
     fun inject(addressViewModel: AddressViewModel)
     fun inject(addressManagerViewModel: AddressManagerViewModel)
     fun inject(profileManagerViewModel: ProfileManagerViewModel)
+    fun inject(entranceViewModel: EntranceViewModel)
 }

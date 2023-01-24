@@ -12,6 +12,10 @@ class ProductEntity(
     val price: Long,
     var amount: Long,
     var quantity: Long,
+    val description: String,
+    val gender: String,
+    val category: String,
     val imagePath: String,
-    val size: String
+    val size: String,
+    val productUid: String,
 )

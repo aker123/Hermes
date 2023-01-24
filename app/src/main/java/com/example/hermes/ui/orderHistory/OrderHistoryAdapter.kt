@@ -112,7 +112,8 @@ class OrderHistoryAdapter(
                 }
 
             })
-            binding.numberOrder.text = order.number
+            binding.date.text = order.date
+            binding.numberOrder.text = binding.numberOrder.resources.getString(R.string.number,order.number)
             binding.name.text = order.shop.name
             binding.status.text = order.status.key
             binding.amount.text = binding.amount.resources.getString(R.string.price,order.amount.toString())

@@ -50,7 +50,6 @@ class ShopsViewModel(
     fun getShops(): MutableLiveData<List<Shop>?> {
         var shops: MutableLiveData<List<Shop>?> = MutableLiveData<List<Shop>?>()
         viewModelScope.launch {
-            setState { ShopsContract.State.Loading }
             try {
                 shops = getShopUseCase.execute()
             } catch (e: IOException) {
@@ -60,8 +59,6 @@ class ShopsViewModel(
             } catch (e: Exception) {
                 setEffect { ShopsContract.Effect.ShowMessage(R.string.shops_error) }
             }
-
-            setState { ShopsContract.State.Setting }
         }
         return shops
     }

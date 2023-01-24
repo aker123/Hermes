@@ -7,8 +7,10 @@ import com.example.hermes.domain.data.network.products.IProductsApi
 import com.example.hermes.domain.data.network.products.ProductsApiManager
 import com.example.hermes.domain.repository.ProductsRepository
 import com.example.hermes.domain.usecase.delete.ClearBasketUseCase
+import com.example.hermes.domain.usecase.delete.DeleteProductDBUseCase
 import com.example.hermes.domain.usecase.get.GetProductsUseCase
 import com.example.hermes.domain.usecase.get.GetSelectedProductsUseCase
+import com.example.hermes.domain.usecase.save.SaveProductUseCase
 import com.example.hermes.domain.usecase.save.SaveProductsUseCase
 import dagger.Module
 import dagger.Provides
@@ -82,5 +84,19 @@ class ProductsModule {
         productsRepository: ProductsRepository
     ): ClearBasketUseCase {
         return ClearBasketUseCase(productsRepository)
+    }
+
+    @Provides
+    fun provideDeleteProductDBUseCase(
+        productsRepository: ProductsRepository
+    ): DeleteProductDBUseCase {
+        return DeleteProductDBUseCase(productsRepository)
+    }
+
+    @Provides
+    fun provideSaveProductUseCase(
+        productsRepository: ProductsRepository
+    ): SaveProductUseCase {
+        return SaveProductUseCase(productsRepository)
     }
 }

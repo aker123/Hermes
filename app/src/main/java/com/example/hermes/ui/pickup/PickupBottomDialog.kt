@@ -1,4 +1,4 @@
-package com.example.hermes.ui
+package com.example.hermes.ui.pickup
 
 import android.os.Bundle
 import android.view.LayoutInflater

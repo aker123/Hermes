@@ -11,19 +11,15 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hermes.R
-import com.example.hermes.application.Hermes
 import com.example.hermes.databinding.OrdersActivityBinding
 import com.example.hermes.domain.filters.FilterGroup
 import com.example.hermes.domain.filters.FilterProvider
 import com.example.hermes.domain.models.Operator
 import com.example.hermes.domain.models.Order
 import com.example.hermes.domain.models.Shop
-import com.example.hermes.domain.usecase.get.GetOperatorDBUseCase
 import com.example.hermes.ui.filters.FiltersDialog
 import com.example.hermes.ui.orderManager.OrderManagerFragmentActivity
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
-import kotlin.system.exitProcess
 
 
 class OrdersActivity : AppCompatActivity() {
@@ -37,28 +33,28 @@ class OrdersActivity : AppCompatActivity() {
     private var orders: List<Order>? = null
     private var ordersSearch: List<Order>? = null
 
-    private lateinit var shop: Shop
-    private lateinit var operator: Operator
     var search: Boolean = false
 
     private var filters: FilterGroup<Order>? = null
 
-    @Inject
-    lateinit var getOperatorDBUseCase: GetOperatorDBUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as Hermes).appComponent?.inject(this)
         super.onCreate(savedInstanceState)
         _binding = OrdersActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         initObservers()
         init()
 
-        shop.let {
-            viewModel.getOrders(it).observe(this) { _orders ->
-                orders = _orders
-                ordersSearch = _orders
-                update()
+        toStateLoading()
+        viewModel.getOperator()?.let { operator ->
+            operator.shop.let {
+                viewModel.getOrders(it).observe(this) { _orders ->
+                    orders = _orders
+                    ordersSearch = _orders
+                    filters = FilterProvider.getFiltersOrder(orders)
+                    toStateSetting()
+                    update()
+                }
             }
         }
 
@@ -75,7 +71,13 @@ class OrdersActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
                     ordersSearch?.let {
-                        viewModel.setEvent(OrdersContract.Event.OnSearch(ordersSearch!!, newText,filters))
+                        viewModel.setEvent(
+                            OrdersContract.Event.OnSearch(
+                                ordersSearch!!,
+                                newText,
+                                filters
+                            )
+                        )
                     }
                 }
                 return true
@@ -112,9 +114,6 @@ class OrdersActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        filters = FilterProvider.getFiltersOrder()
-        operator = getOperatorDBUseCase.execute()!!
-        shop = operator.shop
         adapter = OrdersAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(true)
@@ -157,9 +156,13 @@ class OrdersActivity : AppCompatActivity() {
         }
     }
 
+    private fun exit() {
+        finishAffinity()
+    }
+
     override fun onBackPressed() {
+        exit()
         super.onBackPressed()
-        finish()
     }
 
     private fun update() {

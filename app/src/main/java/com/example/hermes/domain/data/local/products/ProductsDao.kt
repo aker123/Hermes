@@ -1,9 +1,6 @@
 package com.example.hermes.domain.data.local.products
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.hermes.domain.data.local.products.entities.ProductEntity
 import com.example.hermes.domain.data.local.products.entities.SizeEntity
 
@@ -14,7 +11,13 @@ interface ProductsDao {
     fun insertProducts(productEntity: List<ProductEntity>?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertProduct(productEntity: ProductEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSizes(sizeEntity: List<SizeEntity>?)
+
+    @Delete
+    fun deleteProduct(productEntity: ProductEntity)
 
     @Query("DELETE FROM ProductEntity")
     fun clearingProducts()

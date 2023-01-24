@@ -5,5 +5,8 @@ class IProduct(
     val name: String,
     val price: String,
     val shopUID: String,
+    val description: String,
+    val gender: String,
+    val category: String,
     val imagePath: String
 )

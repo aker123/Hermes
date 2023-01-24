@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/main</item>
         <item name="colorPrimaryVariant">@color/main</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/grey</item>
+        <item name="colorOnSurface">@color/gray_white</item>
         <item name="colorError">@color/red_900</item>
 <!--        <item name="android:windowBackground">@drawable/gradient_background</item>-->
         <!-- Secondary brand color. -->

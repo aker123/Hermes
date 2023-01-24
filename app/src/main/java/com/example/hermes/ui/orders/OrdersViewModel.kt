@@ -6,12 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.hermes.R
 import com.example.hermes.application.Hermes
 import com.example.hermes.domain.filters.FilterGroup
+import com.example.hermes.domain.models.Operator
 import com.example.hermes.domain.models.Order
 import com.example.hermes.domain.models.Shop
 import com.example.hermes.domain.usecase.delete.DeleteOperatorDBUseCase
 import com.example.hermes.domain.usecase.delete.DeleteUserDBUseCase
+import com.example.hermes.domain.usecase.get.GetOperatorDBUseCase
 import com.example.hermes.domain.usecase.get.GetOrdersUseCase
 import com.example.hermes.ui.base.BaseViewModel
+import com.example.hermes.ui.entrance.EntranceContract
 import com.example.hermes.ui.profile.ProfileContract
 import com.example.hermes.ui.shops.ShopsContract
 import kotlinx.coroutines.launch
@@ -30,6 +33,10 @@ class OrdersViewModel(
 
     @Inject
     lateinit var getOrdersUseCase: GetOrdersUseCase
+
+
+    @Inject
+    lateinit var getOperatorDBUseCase: GetOperatorDBUseCase
 
     init {
         (application as Hermes).appComponent?.inject(this)
@@ -50,10 +57,21 @@ class OrdersViewModel(
         }
     }
 
+    fun getOperator(): Operator? {
+        var operator: Operator? = null
+        viewModelScope.launch {
+            try {
+                operator = getOperatorDBUseCase.execute()
+            } catch (e: Exception) {
+                setEffect { OrdersContract.Effect.ShowMessage(R.string.orders_error) }
+            }
+        }
+        return operator
+    }
+
     fun getOrders(shop: Shop): MutableLiveData<List<Order>?> {
         var orders: MutableLiveData<List<Order>?> = MutableLiveData<List<Order>?>()
         viewModelScope.launch {
-            setState { OrdersContract.State.Loading }
             try {
                 orders = getOrdersUseCase.execute(shop)
             } catch (e: IOException) {
@@ -63,8 +81,6 @@ class OrdersViewModel(
             } catch (e: Exception) {
                 setEffect { OrdersContract.Effect.ShowMessage(R.string.orders_error) }
             }
-
-            setState { OrdersContract.State.Setting }
         }
         return orders
     }

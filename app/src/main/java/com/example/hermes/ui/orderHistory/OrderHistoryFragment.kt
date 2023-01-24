@@ -1,9 +1,13 @@
 package com.example.hermes.ui.orderHistory
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,9 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hermes.R
 import com.example.hermes.databinding.OrderHistoryFragmentBinding
-import com.example.hermes.domain.models.Order
+import com.example.hermes.domain.models.User
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
+import java.time.Duration
 
 
 class OrderHistoryFragment : Fragment() {
@@ -23,6 +27,8 @@ class OrderHistoryFragment : Fragment() {
 
 
     private var adapter: OrderHistoryAdapter? = null
+
+    var user: User? = null
 
     private val ordersProducts: MutableList<Any> = mutableListOf()
 
@@ -46,14 +52,15 @@ class OrderHistoryFragment : Fragment() {
         initObservers()
         init()
 
-        val user = viewModel.getUserDB()
-
+        toStateLoading()
+        user = viewModel.getUserDB()
         user?.let { it ->
             viewModel.getOrderHistory(it, onlyActiveOrders).observe(viewLifecycleOwner) { orders ->
                 orders?.forEach { order ->
                     ordersProducts.add(order)
                     ordersProducts.addAll(order.products)
                 }
+                toStateSetting()
                 update()
             }
         }
@@ -98,12 +105,27 @@ class OrderHistoryFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.uiEffect.collect { effect ->
                 when (effect) {
-                    is OrderHistoryContract.Effect.ShowMessage -> {
-                        showMessage(effect.messageId)
+                    is OrderHistoryContract.Effect.ShowMessage<*> -> {
+                        when (effect.message) {
+                            is Int -> showMessage(effect.message, Snackbar.LENGTH_SHORT)
+                            is String -> showMessage(effect.message, Snackbar.LENGTH_SHORT)
+                        }
+                    }
+                    is OrderHistoryContract.Effect.ShowNotificationsOrdersDif -> {
+                        effect.ordersDif.forEach { order ->
+                            val text =  getString(R.string.order_dif,order.number,order.status.key)
+                            showMessage(text, Snackbar.LENGTH_LONG)
+                        }
+                        viewModel.updateOrdersDB(effect.ordersDif)
                     }
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startNotification()
     }
 
     private fun toStateSetting() {
@@ -116,9 +138,15 @@ class OrderHistoryFragment : Fragment() {
         binding.load.isVisible = true
     }
 
-    private fun showMessage(messageId: Int) {
+    private fun showMessage(message: String, length: Int) {
         Snackbar
-            .make(binding.root, messageId, Snackbar.LENGTH_SHORT)
+            .make(binding.root, message, length)
+            .show()
+    }
+
+    private fun showMessage(message: Int, length: Int) {
+        Snackbar
+            .make(binding.root, message, length)
             .show()
     }
 

@@ -5,35 +5,28 @@ import com.example.hermes.domain.models.Shop
 import com.example.hermes.ui.base.UiEffect
 import com.example.hermes.ui.base.UiEvent
 import com.example.hermes.ui.base.UiState
+import com.example.hermes.ui.basket.BasketContract
 import com.example.hermes.ui.shops.ShopsContract
 
 class ProductsContract {
 
     sealed class Event: UiEvent {
-        class OnClickProduct(
-            val product: Product
-        ) : Event()
-        class OnCLickPrice(
-            val product: Product
+        class OnCLickAddBasket(
+            val product: Product,
+            val selectedProducts: MutableList<Product>
         ): Event()
-        class OnClickAdd(
-            val product: Product
-        ): Event()
-        class OnClickRemove(
-            val product: Product
-        ): Event()
-        class OnClickOnBasket(
-            val shop: Shop?,
-            val products: List<Product>?
-        ): Event()
+        object OnClickOnBasket: Event()
         class OnSearch(
             val products: List<Product>,
-            val query: String
+            val query: String,
+            val textGender: String?,
+            val textCategory:String?,
         ): Event()
         class OnCheckedChange(
             val product: Product,
             val size: String
         ): Event()
+        object ClearBasket: Event()
     }
 
     sealed class State: UiState {
@@ -50,5 +43,6 @@ class ProductsContract {
             val products: List<Product>? = null
         ): Effect()
         object OnBasketFragmentActivity : Effect()
+        object UpdateAmount : Effect()
     }
 }

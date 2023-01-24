@@ -28,5 +28,6 @@ class ProfileContract {
         object OnAddressFragmentActivity : Effect()
         object OnDataFragmentActivity : Effect()
         object OnExit : Effect()
+        object Update : Effect()
     }
 }
